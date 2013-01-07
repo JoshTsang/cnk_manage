@@ -95,7 +95,7 @@
       	<div class="action-bar">
       		<div class="pull-right">
       			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTable"><i class="icon-plus"></i> 新建</button>
-      			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortTable"><i class="icon-plus"></i> 排序</button>
+      			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortTable"><i class="icon-arrow-down"></i> 排序</button>
       		</div>
       	</div>
         <table class="table table-striped table-bordered">
