@@ -21,6 +21,19 @@
       .container-custome {
         max-width: 1000px;
       }
+      
+      .controls-custome {
+          display: inline-block;
+          margin-left: 12px;
+          width: 180px;
+      }
+      
+      .control-label-custome {
+          float: left;
+          width: 45px;
+          padding-top: 5px;
+          text-align: right;
+      }
     </style>
 
 
@@ -33,7 +46,130 @@
 
   <body>
     <?php $elements->navBar("Username", 3); ?>
-
+    <div class="modal hide fade" id="sortDishes" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>菜品排序</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">序号</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="序号">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">更后序号</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="更后序号">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+    <div class="modal hide fade" id="addDish" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>新建菜品</h3>
+      </div>
+      <div class="modal-body">
+          <div style="width: 500px">
+              <div style="width: 250px; float:left">
+                  <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">名称</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="名称">
+                            <span style="color: #FF0000">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">价格</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="价格">
+                            <span style="color: #FF0000">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">价格2</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="价格2">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome">便捷码</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" placeholder="便捷码">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">分单</label>
+                        <div class="controls-custome">
+                            <select class="span2">
+                                <option>热菜</option>
+                                <option>凉菜</option>
+                            </select>
+                        </div>
+                    </div>
+                    </form>
+              </div>
+              <div style="width: 250px; float:right">
+                  <form class="form-horizontal">
+                  <div class="control-group">
+                        <label class="control-label-custome">英文名</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="英文名">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">单位</label>
+                        <div class="controls-custome">
+                            <select class="span2">
+                                <option>斤</option>
+                                <option>两</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">价格3</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="价格3">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail-custome">折扣</label>
+                        <div class="controls-custome">
+                            <input class="span2" type="text" id="inputEmail" placeholder="折扣">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label-custome" for="inputEmail">图片</label>
+                        <div class="controls-custome">
+                            <button class="btn">选择文件</button>
+                        </div>
+                    </div>
+            </form>
+              </div>
+          </div>
+            <form class="form-horizontal">
+                <label class="control-label-custome" for="description">描述</label>
+                <div class="controls-custome">
+                    <input style="width: 410px" type="text" id="description" placeholder="描述">
+                </div>
+            </form>
+        </div>
+	    <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            <a href="#" class="btn btn-primary">确定</a>
+        </div>
+    </div>
     <div class="container-fluid">
       <div class="row-fluid container-custome">
         <div class="span2">
@@ -58,8 +194,8 @@
         <div class="span10">
           	<div class="action-bar">
           		<div class="pull-right">
-          			<a class="btn btn-primary" href="#"><i class="icon-plus"></i> 新建</a>
-          			<a class="btn btn-primary" href="#"><i class="icon-arrow-down"></i> 排序</a>
+          			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addDish"><i class="icon-plus"></i> 新建</button>
+          			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortDishes"><i class="icon-plus"></i> 排序</button>
           		</div>
           	</div>
             <table class="table table-striped table-bordered">

@@ -29,7 +29,76 @@
 
   <body>
     <?php $elements->navBar("Username", 2);?>
-
+    <div class="modal hide fade" id="addCategory" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>新建分类</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">名称</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="名称">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+    <div class="modal hide fade" id="addUnit" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>新建单位</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">名称</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="名称">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+    <div class="modal hide fade" id="sortCategory" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>分类排序</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">序号</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="序号">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">更后序号</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="更后序号">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
     <div class="container-fluid">
         
       <div class="row-fluid container-custome">
@@ -42,13 +111,13 @@
     <div class="tab-pane active" id="tab1">
         <div class="action-bar">
             <div class="pull-right">
-                <a class="btn btn-primary" href="#"><i class="icon-plus"></i> 新建</a>
-                <a class="btn btn-primary" href="#"><i class="icon-arrow-down"></i> 排序</a>
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory"><i class="icon-plus"></i> 新建</button>
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortCategory"><i class="icon-plus"></i> 排序</button>
             </div>
         </div>
         <table class="table table-striped table-bordered">
             <thead>
-                <td>#</td><td>分类名称</td><td>操作</td>
+                <td width="5%">#</td><td width="80%">分类名称</td><td width="15%">操作</td>
             </thead>
             <tbody>
                 <tr><td>1</td><td>特色菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
@@ -63,7 +132,7 @@
     <div class="tab-pane" id="tab2">
         <div class="action-bar">
             <div class="pull-right">
-                <a class="btn btn-primary" href="#"><i class="icon-plus"></i> 新建</a>
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUnit"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
         <table class="table table-striped table-bordered">

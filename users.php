@@ -29,12 +29,46 @@
 
   <body>
     <?php $elements->navBar("Username", 7); ?>
-
+    <div class="modal hide fade" id="addUser" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>新建用户</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">用户名</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="用户名">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">密码</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="密码">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">确认密码</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="确认密码">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
     <div class="container-fluid">
       <div class="row-fluid container-custome">
         <div class="action-bar">
             <div class="pull-right">
-                <a class="btn btn-primary" href="#"><i class="icon-plus"></i> 新建</a>
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUser"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
         <table class="table table-striped table-bordered">

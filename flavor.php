@@ -29,12 +29,33 @@
 
   <body>
     <?php $elements->navBar("Username", 4); ?>
-
+    <div class="modal hide fade" id="addFlavor" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>新建口味</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">名称</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="名称">
+                  <span style="color: #FF0000">*</span>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+    
     <div class="container-fluid">
       <div class="row-fluid container-custome">
         <div class="action-bar">
             <div class="pull-right">
-                <a class="btn btn-primary" href="#"><i class="icon-plus"></i> 新建</a>
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addFlavor"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
         <table class="table table-striped table-bordered">
