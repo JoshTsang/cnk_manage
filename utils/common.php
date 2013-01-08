@@ -62,7 +62,7 @@
         $reslut = $db->query($sql) or die("Error in query: <span style='color:red;'>$sql</span>");
         $num_columns = $reslut->numColumns();
         for ($i=0; $i<$num_columns; $i++) {
-            echo "<th>".$reslut->columnName($i)."</th>";
+            echo "<th>[".$i."]".$reslut->columnName($i)."</th>";
         }
         echo "</thead></tr><tbody id=\"printList\">";
         
