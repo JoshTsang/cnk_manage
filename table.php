@@ -37,22 +37,22 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="tableName">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="名称">
+                  <input type="text" id="tableName" placeholder="名称">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">序号</label>
+                <label class="control-label" for="tableIndex">序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="序号">
+                  <input type="text" id="tableIndex" placeholder="序号">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">楼层</label>
+                <label class="control-label" for="tableFloor">楼层</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="楼层">
+                  <input type="text" id="tableFloor" placeholder="楼层">
                 </div>
               </div>
         </form>
@@ -70,16 +70,16 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">序号</label>
+                <label class="control-label" for="indexOrig">序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="序号">
+                  <input type="text" id="indexOrig" placeholder="序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">更后序号</label>
+                <label class="control-label" for="indexNew">更后序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="更后序号">
+                  <input type="text" id="indexNew" placeholder="更后序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -102,16 +102,7 @@
         	<thead>
         		<td width="5%">#</td><td width="60%">桌号</td><td width="20%">所属区域/楼层</td><td width="15%">操作</td>
         	</thead>
-        	<tbody>
-        		<tr><td>1</td><td>1</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>2</td><td>2</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>3</td><td>3</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>4</td><td>4</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>5</td><td>5</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>6</td><td>6</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>7</td><td>7</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>8</td><td>8</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-        		<tr><td>9</td><td>9</td><td>1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
+        	<tbody id="tables">
         	</tbody>
         </table>
       </div><!--/row-->
@@ -119,5 +110,6 @@
     </div><!--/.fluid-container-->
     
 	<?php include "footer.inc"; ?>
+	<script type="text/javascript" src="js/table.js"></script>
   </body>
 </html>

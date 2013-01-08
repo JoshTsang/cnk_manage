@@ -84,35 +84,35 @@
               <div style="width: 250px; float:left">
                   <form class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">名称</label>
+                        <label class="control-label-custome" for="dname">名称</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="名称">
+                            <input class="span2" type="text" id="dname" placeholder="名称">
                             <span style="color: #FF0000">*</span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">价格</label>
+                        <label class="control-label-custome" for="price">价格</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="价格">
+                            <input class="span2" type="text" id="price" placeholder="价格">
                             <span style="color: #FF0000">*</span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">价格2</label>
+                        <label class="control-label-custome" for="price2">价格2</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="价格2">
+                            <input class="span2" type="text" id="price2" placeholder="价格2">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome">便捷码</label>
+                        <label class="control-label-custome" for="shortcut">便捷码</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" placeholder="便捷码">
+                            <input class="span2" type="shortcut" placeholder="便捷码">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">分单</label>
+                        <label class="control-label-custome" for="shortcut">分单</label>
                         <div class="controls-custome">
-                            <select class="span2">
+                            <select class="span2" id="shortcut">
                                 <option>热菜</option>
                                 <option>凉菜</option>
                             </select>
@@ -123,14 +123,14 @@
               <div style="width: 250px; float:right">
                   <form class="form-horizontal">
                   <div class="control-group">
-                        <label class="control-label-custome">英文名</label>
+                        <label class="control-label-custome" for="ename">英文名</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="英文名">
+                            <input class="span2" type="text" id="ename" placeholder="英文名">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">单位</label>
-                        <div class="controls-custome">
+                        <label class="control-label-custome" for="unit">单位</label>
+                        <div class="controls-custome" id="unit">
                             <select class="span2">
                                 <option>斤</option>
                                 <option>两</option>
@@ -138,21 +138,21 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">价格3</label>
+                        <label class="control-label-custome" for="price3">价格3</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="价格3">
+                            <input class="span2" type="text" id="price3" placeholder="价格3">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail-custome">折扣</label>
+                        <label class="control-label-custome" for="discount">折扣</label>
                         <div class="controls-custome">
-                            <input class="span2" type="text" id="inputEmail" placeholder="折扣">
+                            <input class="span2" type="text" id="discount" placeholder="折扣">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="inputEmail">图片</label>
-                        <div class="controls-custome">
-                            <button class="btn">选择文件</button>
+                        <label class="control-label-custome" for="dishImg">图片</label>
+                        <div class="controls-custome" >
+                            <button class="btn" id="dishImg">选择文件</button>
                         </div>
                     </div>
             </form>
@@ -174,7 +174,7 @@
       <div class="row-fluid container-custome">
         <div class="span2">
           <div class="well sidebar-nav">
-            <ul class="nav nav-list">
+            <ul class="nav nav-list" id="categories">
               <li class="active"><a href="#">分类1</a></li>
               <li><a href="#">分类2</a></li>
               <li><a href="#">分类3</a></li>
@@ -202,7 +202,7 @@
             	<thead>
             		<td width="3%">#</td><td width="18%">名称</td><td width="19%">英文名</td><td width="7%">便捷码</td><td width="7%">单位</td><td width="25%">描述</td><td width="9%">分单</td><td width="12%">操作</td>
             	</thead>
-            	<tbody>
+            	<tbody id="dishes">
             		<tr><td>1</td><td>菜1</td><td>Dish 1</td><td>001</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             		<tr><td>2</td><td>菜2</td><td>Dish 2</td><td>002</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             		<tr><td>3</td><td>菜3</td><td>Dish 3</td><td>003</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>

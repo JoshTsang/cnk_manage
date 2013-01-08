@@ -11,7 +11,7 @@
                           </a>
                           <div class="brand brand-custome"><img src="img/logo.png" border="0" width="115px"/></div>
                           <div class="nav-collapse collapse"><p class="navbar-text pull-right">';
-            echo $username;
+            echo $this->getUserName();
             echo ', <a href="#" class="navbar-link"> 退出</a>
                             </p>';
             echo '<ul class="nav">';
@@ -33,6 +33,10 @@
         public function css() {
             echo '<link href="css/bootstrap.css" rel="stylesheet">
                   <link href="css/manage.css" rel="stylesheet">';
+        }
+        
+        private function getUserName() {
+            return "UserName";
         }
     }
 ?>

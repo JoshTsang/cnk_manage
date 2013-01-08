@@ -37,41 +37,41 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="name">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="名称">
+                  <input type="text" id="name" placeholder="名称">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">IP地址</label>
+                <label class="control-label" for="ipAddr">IP地址</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="IP地址">
+                  <input type="text" id="ipAddr" placeholder="IP地址">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">类型</label>
+                <label class="control-label" for="type">类型</label>
                 <div class="controls">
-                  <select>
+                  <select id="type">
                       <option>58打印机</option>
                       <option>80打印机</option>
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">抬头</label>
+                <label class="control-label" for="title">抬头</label>
                 <div class="controls">
-                  <select>
+                  <select id="title">
                       <option>顾客联</option>
                       <option>存根联</option>
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">内容</label>
+                <label class="control-label" for="receipt">内容</label>
                 <div class="controls">
-                  <select>
+                  <select id="receipt">
                       <option>收银</option>
                       <option>统计</option>
                       <option>厨打</option>
@@ -111,7 +111,7 @@
             <thead>
                 <td width="3%">#</td><td width="19%">名称</td><td width="20%">IP地址</td><td width="17%">打印机类型</td><td width="15%">打印联抬头</td><td width="14%">打印内容</td><td width="12%">操作</td>
             </thead>
-            <tbody>
+            <tbody id="printers">
                 <tr><td>1<td>打印机1</td><td>192.168.0.10</td><td>80打印机</td><td>存根联</td><td>收银</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>2<td>打印机2</td><td>192.168.0.11</td><td>80打印机</td><td>存根联</td><td>统计</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>3<td>打印机3</td><td>192.168.0.12</td><td>80打印机</td><td>存根联</td><td>厨打</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
@@ -127,21 +127,21 @@
         </div>
         <form class="form-horizontal well">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="shopname">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="店铺名称">
+                  <input type="text" id="shopname" placeholder="店铺名称">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">地址</label>
+                <label class="control-label" for="shopAddr">地址</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="店铺地址">
+                  <input type="text" id="shopAddr" placeholder="店铺地址">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">电话</label>
+                <label class="control-label" for="shopTel">电话</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="店铺电话">
+                  <input type="text" id="shopTel" placeholder="店铺电话">
                 </div>
               </div>
         </form>

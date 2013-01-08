@@ -37,9 +37,9 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="cname">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="名称">
+                  <input type="text" id="cname" placeholder="名称">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -58,9 +58,9 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="unitName">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="名称">
+                  <input type="text" id="unitName" placeholder="名称">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -79,16 +79,16 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">序号</label>
+                <label class="control-label" for="cIndexOrig">序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="序号">
+                  <input type="text" id="cIndexOrig" placeholder="序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">更后序号</label>
+                <label class="control-label" for="cIndexNew">更后序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="更后序号">
+                  <input type="text" id="cIndexNew" placeholder="更后序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -119,7 +119,7 @@
             <thead>
                 <td width="5%">#</td><td width="80%">分类名称</td><td width="15%">操作</td>
             </thead>
-            <tbody>
+            <tbody id="categories">
                 <tr><td>1</td><td>特色菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>2</td><td>凉菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>3</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
@@ -139,7 +139,7 @@
             <thead>
                 <td width="5%">#</td><td width="85%">单位</td><td width="10%">操作</td>
             </thead>
-            <tbody>
+            <tbody id="units">
                 <tr><td>1</td><td>份</td><td class="action"><a href="#">[删除]</a></td></tr>
                 <tr><td>2</td><td>斤</td><td class="action"><a href="#">[删除]</a></td></tr>
                 <tr><td>3</td><td>列</td><td class="action"><a href="#">[删除]</a></td></tr>

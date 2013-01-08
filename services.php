@@ -37,9 +37,9 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">名称</label>
+                <label class="control-label" for="name">名称</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="名称">
+                  <input type="text" id="name" placeholder="名称">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -61,7 +61,7 @@
             <thead>
                 <td width="5%">#</td><td width="80%">服务</td><td width="15%">操作</td>
             </thead>
-            <tbody>
+            <tbody id="services">
                 <tr><td>1</td><td>结账</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>2</td><td>拿纸</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>3</td><td>服务1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>

@@ -37,23 +37,23 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">用户名</label>
+                <label class="control-label" for="uname">用户名</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="用户名">
+                  <input type="text" id="uname" placeholder="用户名">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">密码</label>
+                <label class="control-label" for="passwd">密码</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="密码">
+                  <input type="text" id="passwd" placeholder="密码">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">确认密码</label>
+                <label class="control-label" for="pwdConfirm">确认密码</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="确认密码">
+                  <input type="text" id="pwdConfirm" placeholder="确认密码">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -75,7 +75,7 @@
             <thead>
                 <td width="5%">#</td><td width="20%">用户名</td><td width="20%">PAD权限</td><td width="20%">前台权限</td><td width="20%">后台权限</td><td width="15%">操作</td>
             </thead>
-            <tbody>
+            <tbody id="users">
                 <tr><td>1</td><td>用户1</td><td>权限1</td><td>权限1</td><td>权限1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>2</td><td>用户2</td><td>权限2</td><td>权限2</td><td>权限2</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
                 <tr><td>3</td><td>用户3</td><td>权限3</td><td>权限3</td><td>权限3</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
