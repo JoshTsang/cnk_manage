@@ -76,10 +76,6 @@
                 <td width="5%">#</td><td width="20%">用户名</td><td width="20%">PAD权限</td><td width="20%">前台权限</td><td width="20%">后台权限</td><td width="15%">操作</td>
             </thead>
             <tbody id="users">
-                <tr><td>1</td><td>用户1</td><td>权限1</td><td>权限1</td><td>权限1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>2</td><td>用户2</td><td>权限2</td><td>权限2</td><td>权限2</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>3</td><td>用户3</td><td>权限3</td><td>权限3</td><td>权限3</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>4</td><td>用户4</td><td>权限4</td><td>权限4</td><td>权限4</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             </tbody>
         </table>
       </div><!--/row-->
@@ -87,5 +83,6 @@
     </div><!--/.fluid-container-->
     
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/users.js"></script>
   </body>
 </html>

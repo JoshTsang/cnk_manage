@@ -18,6 +18,28 @@
         padding-top: 60px;
         height: 100%;
       }
+      .testing {
+            position: fixed;
+            top: 45%;
+            left: 45%;
+            z-index: 1050;
+            padding-top:10px;
+            padding-left:20px;
+            width: 100px;
+            background-color: white;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            outline: none;
+            -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding-box;
+            background-clip: padding-box;
+      }
     </style>
 
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -29,6 +51,13 @@
 
   <body>
     <?php $elements->navBar("Username", 6);?>
+    <div class="testing hide" id="testing" role="dialog">
+        <div >
+            <p>
+                <img style="width:15px;height:15px;" src="img/loading_circle.gif"> 测试中...
+            </p>
+        </div>
+    </div>
     <div class="modal hide fade" id="addPrinter" role="dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -96,7 +125,7 @@
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">更多<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="#">测试</a></li>
+          <li><a href="javascript:OnTestClick()">测试</a></li>
         </ul>
     </li>
   </ul>
@@ -112,10 +141,6 @@
                 <td width="3%">#</td><td width="19%">名称</td><td width="20%">IP地址</td><td width="17%">打印机类型</td><td width="15%">打印联抬头</td><td width="14%">打印内容</td><td width="12%">操作</td>
             </thead>
             <tbody id="printers">
-                <tr><td>1<td>打印机1</td><td>192.168.0.10</td><td>80打印机</td><td>存根联</td><td>收银</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>2<td>打印机2</td><td>192.168.0.11</td><td>80打印机</td><td>存根联</td><td>统计</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>3<td>打印机3</td><td>192.168.0.12</td><td>80打印机</td><td>存根联</td><td>厨打</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>4<td>打印机4</td><td>192.168.0.13</td><td>80打印机</td><td>存根联</td><td>点菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             </tbody>
         </table>
     </div>
@@ -129,7 +154,7 @@
               <div class="control-group">
                 <label class="control-label" for="shopname">名称</label>
                 <div class="controls">
-                  <input type="text" id="shopname" placeholder="店铺名称">
+                  <input type="text" id="shopname" placeholder="店铺名称" >
                 </div>
               </div>
               <div class="control-group">
@@ -154,5 +179,6 @@
     </div><!--/.fluid-container-->
     
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/printers.js"></script>
   </body>
 </html>

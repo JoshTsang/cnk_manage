@@ -34,6 +34,10 @@
           padding-top: 5px;
           text-align: right;
       }
+      
+      #categories li{
+          font-size: 18px;
+      }
     </style>
 
 
@@ -175,19 +179,6 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list" id="categories">
-              <li class="active"><a href="#">分类1</a></li>
-              <li><a href="#">分类2</a></li>
-              <li><a href="#">分类3</a></li>
-              <li><a href="#">分类4</a></li>
-              <li><a href="#">分类5</a></li>
-              <li><a href="#">分类6</a></li>
-              <li><a href="#">分类7</a></li>
-              <li><a href="#">分类8</a></li>
-              <li><a href="#">分类9</a></li>
-              <li><a href="#">分类10</a></li>
-              <li><a href="#">分类11</a></li>
-              <li><a href="#">分类12</a></li>
-              <li><a href="#">分类13</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -200,18 +191,9 @@
           	</div>
             <table class="table table-striped table-bordered">
             	<thead>
-            		<td width="3%">#</td><td width="18%">名称</td><td width="19%">英文名</td><td width="7%">便捷码</td><td width="7%">单位</td><td width="25%">描述</td><td width="9%">分单</td><td width="12%">操作</td>
+            		<td width="3%">#</td><td width="15%">名称</td><td width="15%">英文名</td><td width="7%">价格</td><td width="7%">便捷码</td><td width="7%">单位</td><td width="25%">描述</td><td width="9%">分单</td><td width="12%">操作</td>
             	</thead>
             	<tbody id="dishes">
-            		<tr><td>1</td><td>菜1</td><td>Dish 1</td><td>001</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>2</td><td>菜2</td><td>Dish 2</td><td>002</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>3</td><td>菜3</td><td>Dish 3</td><td>003</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>4</td><td>菜4</td><td>Dish 4</td><td>004</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>5</td><td>菜5</td><td>Dish 5</td><td>005</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>6</td><td>菜6</td><td>Dish 6</td><td>006</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>7</td><td>菜7</td><td>Dish 7</td><td>007</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>8</td><td>菜8</td><td>Dish 8</td><td>008</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-            		<tr><td>9</td><td>菜的名字要很长</td><td>Dish 9</td><td>009</td><td>份</td><td>菜</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             	</tbody>
             </table>
         </div>
@@ -220,5 +202,6 @@
     </div><!--/.fluid-container-->
     
 	<?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/dishes.js"></script>
   </body>
 </html>

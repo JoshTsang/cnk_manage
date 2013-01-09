@@ -62,11 +62,6 @@
                 <td width="5%">#</td><td width="80%">服务</td><td width="15%">操作</td>
             </thead>
             <tbody id="services">
-                <tr><td>1</td><td>结账</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>2</td><td>拿纸</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>3</td><td>服务1</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>4</td><td>服务2</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>5</td><td>服务3</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             </tbody>
         </table>
       </div><!--/row-->
@@ -74,5 +69,6 @@
     </div><!--/.fluid-container-->
     
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/services.js"></script>
   </body>
 </html>

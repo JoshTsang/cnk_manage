@@ -63,12 +63,6 @@
                 <td width="5%">#</td><td width="80%">口味</td><td width="15%">操作</td>
             </thead>
             <tbody id="flavors">
-                <tr><td>1</td><td>酸</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>2</td><td>甜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>3</td><td>苦</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>4</td><td>辣</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>5</td><td>微辣</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>6</td><td>很辣</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
             </tbody>
         </table>
       </div><!--/row-->
@@ -76,5 +70,6 @@
     </div><!--/.fluid-container-->
     
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/flavor.js"></script>
   </body>
 </html>

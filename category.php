@@ -105,7 +105,8 @@
         <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">菜品分类</a></li>
-    <li><a href="#tab2" data-toggle="tab">单位设置</a></li>
+    <li><a href="#tab2" data-toggle="tab">分类打印</a></li>
+    <li><a href="#tab3" data-toggle="tab">单位设置</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
@@ -120,16 +121,21 @@
                 <td width="5%">#</td><td width="80%">分类名称</td><td width="15%">操作</td>
             </thead>
             <tbody id="categories">
-                <tr><td>1</td><td>特色菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>2</td><td>凉菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>3</td><td>热菜</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>4</td><td>汤</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>5</td><td>甜点</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
-                <tr><td>6</td><td>酒水</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>
+                
             </tbody>
         </table>
     </div>
     <div class="tab-pane" id="tab2">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <td width="5%">#</td><td width="35%">分类</td><td width="50%">打印机</td><td width="10%">操作</td>
+            </thead>
+            <tbody id="categoryPrint">
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane" id="tab3">
         <div class="action-bar">
             <div class="pull-right">
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUnit"><i class="icon-plus"></i> 新建</button>
@@ -140,11 +146,7 @@
                 <td width="5%">#</td><td width="85%">单位</td><td width="10%">操作</td>
             </thead>
             <tbody id="units">
-                <tr><td>1</td><td>份</td><td class="action"><a href="#">[删除]</a></td></tr>
-                <tr><td>2</td><td>斤</td><td class="action"><a href="#">[删除]</a></td></tr>
-                <tr><td>3</td><td>列</td><td class="action"><a href="#">[删除]</a></td></tr>
-                <tr><td>4</td><td>人</td><td class="action"><a href="#">[删除]</a></td></tr>
-                <tr><td>5</td><td>半斤</td><td class="action"><a href="#">[删除]</a></td></tr>
+                
             </tbody>
         </table>
     </div>
@@ -156,5 +158,7 @@
     </div><!--/.fluid-container-->
     
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/category.js"></script>
+    <script type="text/javascript" src="js/units.js"></script>
   </body>
 </html>
