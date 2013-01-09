@@ -59,8 +59,8 @@
                     $user = array('uid' => $row[0],
                                   'name' => $row[1],
                                   'permissionPad' => $row[3],
-                                  'permissionFg' => $row[4],
-                                  'permissionBg' => $row[5] );
+                                  'permissionFG' => $row[4],
+                                  'permissionBG' => $row[5] );
                     $users[$i] = $user;
                     $i++;
                  }
@@ -146,6 +146,63 @@
             
         }
         
+        public function getCategoryPrint() {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
+            
+            $categoryPrintList = array();
+            $sql = sprintf("select * from %s order by %s", CATEGORIES, 'categoryOrder');
+            $rsCategories = $this->menuDB->query($sql); 
+            if ($rsCategories) {
+                $i = 0;
+                while($rowCategory = $rsCategories->fetchArray()) {
+                    $sql = sprintf("select %s.categoryID, categoryName, sortPrintID, sortPrintName
+                                           from %s, %s, %s, %s 
+                                           WHERE %s.id=%s.dishID AND %s.id=sortPrintID AND %s.categoryID=%s
+                                           GROUP BY sortPrintID",
+                                           CATEGORIES,
+                                           DISHES, CATEGORIES, PRINTERS, DISH_CATEGORY,
+                                           DISHES, DISH_CATEGORY, PRINTERS, CATEGORIES, $rowCategory[0]);
+                    $resultSet = $this->menuDB->query($sql); 
+                    if ($resultSet) {
+                        $printerIndex = 0;
+                        $printers = array();
+                        $printerNames = "";
+                        
+                        while($row = $resultSet->fetchArray()) {
+                            $printers[$printerIndex] = $row[2];
+                            $printerNames .= $row[3].",";
+                            $printerIndex++;
+                         }
+                         if (count($printers) > 0) {
+                             $printerNames = substr($printerNames, 0, strlen($printerNames) - 1);
+                         }
+                         $categoryPrint = array('id' => $rowCategory[0],
+                                             'name' => $rowCategory[1],
+                                             'printerNames' => $printerNames,
+                                             'printerIds' => $printers);
+                         $categoryPrintList[$i] = $categoryPrint;
+                         $i++;
+                    } else {
+                        $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                        return false;
+                    }
+                 }
+            } else {
+                $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return false;
+            }
+            
+           
+            return json_encode($categoryPrintList);
+        }
+        
+        //TODO
+        public function updateCategoryPrint() {
+            
+        }
+
         public function getServices() {
             if (!$this->connectInfoDB()) {
                 return false;
@@ -327,7 +384,6 @@
             }
         }
         
-        //TODO
         public function getDishes($categoryId) {
             if (!$this->connectMenuDB()) {
                 return false;
@@ -335,7 +391,7 @@
             
             $dishes = array();
             $sql = sprintf("select %s.id, name, shortcut, price, unitName,
-                                   description, sortPrintName, dishOrder 
+                                   description, sortPrintName, dishOrder, englishName
                                    from %s, %s, %s, %s 
                                    WHERE %s.id=%s.dishID AND %s.id=unitID AND %s.id=sortPrintID AND categoryID=%s
                                    ORDER BY dishOrder",
@@ -348,6 +404,7 @@
                 while($row = $resultSet->fetchArray()) {
                     $dish = array('id' => $row[0],
                                    'name' => $row[1],
+                                   'ename' => $row[8],
                                    'shortcut' => $row[2],
                                    'price' => $row[3],
                                    'unitName' => $row[4],
