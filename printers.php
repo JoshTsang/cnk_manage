@@ -1,5 +1,5 @@
 <?php
-    require "element.cls";
+    require "element.php";
     $elements = new element();
 ?>
 <!DOCTYPE html>
@@ -136,6 +136,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addPrinter"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
+      	<?php $elements->warningBlock("printerWarning"); ?>
         <table class="table table-striped table-bordered">
             <thead>
                 <td width="3%">#</td><td width="19%">名称</td><td width="20%">IP地址</td><td width="17%">打印机类型</td><td width="15%">打印联抬头</td><td width="14%">打印内容</td><td width="12%">操作</td>

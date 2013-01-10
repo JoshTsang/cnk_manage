@@ -47,6 +47,10 @@ function ShopInfo() {
 			}
 		}
 	}
+	
+	this.remove = function(index) {
+		
+	}
 }
 
 function Printers() {

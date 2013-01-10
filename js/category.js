@@ -21,10 +21,22 @@ function Categories() {
 			    $.each(data, function(i, category){
 			      categories.categories[i] = new Category(category.id, category.name, category.index);
 			      $("#categories").append('<tr><td>' + category.index + '</td><td>' + category.name +
-			      					 '</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>"');
+			      					 '</td><td class="action"><a href="#">[修改] </a> ' +
+			      					 '<a href="javascript:deleteCategory(' + i + ')"> [删除]</a></td></tr>"');
 			    });
 			} else {
 				//TODO err handle
+			}
+		});
+	}
+	
+	this.remove = function(event) {
+		var url = "api/categories.php?do=delete&id=" + categories.categories[event.data.index].id;
+		$.getJSON(url, function(data){
+			if (data.succ == true) {
+				categories.load();
+			} else {
+				showWarnningBlock("#categoryWarning", "删除单位: " + categories.categories[event.data.index].name + "失败!");
 			}
 		});
 	}
@@ -59,6 +71,13 @@ function CategoryPrintList() {
 			}
 		});
 	}
+}
+
+var deleteCategory = function(index) {
+	showAlertDlg("请注意", "确认删除单位 : " + categories.categories[index].name +
+		 '?<br/><br/><span style="color:#FF0000">注意：删除分类将同时删除该分类下所有菜品</span>');
+	$("#alertPositiveBtn").unbind('click');
+	$("#alertPositiveBtn").click({"index":index}, categories.remove);
 }
 
 var categories = new Categories();

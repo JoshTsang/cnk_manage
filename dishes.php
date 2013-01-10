@@ -1,5 +1,5 @@
 <?php
-	require "element.cls";
+	require "element.php";
 	$elements = new element();
 ?>
 <!DOCTYPE html>
@@ -189,6 +189,7 @@
           			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortDishes"><i class="icon-arrow-down"></i> 排序</button>
           		</div>
           	</div>
+          	<?php $elements->warningBlock("dishWarning"); ?>
             <table class="table table-striped table-bordered">
             	<thead>
             		<td width="3%">#</td><td width="15%">名称</td><td width="15%">英文名</td><td width="7%">价格</td><td width="7%">便捷码</td><td width="7%">单位</td><td width="25%">描述</td><td width="9%">分单</td><td width="12%">操作</td>

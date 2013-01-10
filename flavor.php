@@ -1,5 +1,5 @@
 <?php
-    require "element.cls";
+    require "element.php";
     $elements = new element();
 ?>
 <!DOCTYPE html>
@@ -58,6 +58,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addFlavor"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
+        <?php $elements->warningBlock("flavorWarning"); ?>
         <table class="table table-striped table-bordered">
             <thead>
                 <td width="5%">#</td><td width="80%">口味</td><td width="15%">操作</td>

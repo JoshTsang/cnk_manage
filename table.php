@@ -1,5 +1,5 @@
 <?php
-	require "element.cls";
+	require "element.php";
 	$elements = new element();
 ?>
 <!DOCTYPE html>
@@ -98,6 +98,7 @@
       			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortTable"><i class="icon-arrow-down"></i> 排序</button>
       		</div>
       	</div>
+      	<?php $elements->warningBlock("tableWarning"); ?>
         <table class="table table-striped table-bordered">
         	<thead>
         		<td width="5%">#</td><td width="60%">桌号</td><td width="20%">所属区域/楼层</td><td width="15%">操作</td>

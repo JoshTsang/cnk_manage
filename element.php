@@ -1,6 +1,7 @@
 <?php
     class element {
         public function navBar($username, $active) {
+        	echo '<script type="text/javascript" src="js/lib.js"></script>';
             echo '<div class="navbar navbar-inverse navbar-fixed-top">
                       <div class="navbar-inner">
                         <div class="container-fluid">
@@ -12,7 +13,7 @@
                           <div class="brand brand-custome"><img src="img/logo.png" border="0" width="115px"/></div>
                           <div class="nav-collapse collapse"><p class="navbar-text pull-right">';
             echo $this->getUserName();
-            echo ', <a href="#" class="navbar-link"> 退出</a>
+            echo ', <a href="#" class="navbar-link"> 退出</a> | <a href="../manage/index.php" class="navbar-link">回旧版</a>
                             </p>';
             echo '<ul class="nav">';
             echo  '<li '.($active==1?'class="active"':"").'><a href="'.($active==1?'#':'table.php').'">桌台</a></li>';
@@ -28,6 +29,14 @@
                     </div>
                   </div>
                 </div>';
+           $this->alertDlg();
+        }
+
+        public function warningBlock($id) {
+            echo '<div class="alert alert-error fade in hide" id="'.$id.'">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span id="warning"></span>
+                    </div>';
         }
 
         public function css() {
@@ -37,6 +46,22 @@
         
         private function getUserName() {
             return "UserName";
+        }
+        
+        private function alertDlg() {
+            echo '<div class="modal hide fade" id="alertDlg" role="dialog">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 id="alertTitle"></h3>
+                       </div>
+                      <div id="alertMsg" class="modal-body">
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                        <a id="alertPositiveBtn" href="#" class="btn btn-primary" data-dismiss="modal">确定</a>
+                      </div>
+                    </div>';
         }
     }
 ?>

@@ -1,5 +1,5 @@
 <?php
-    require "element.cls";
+    require "element.php";
     $elements = new element();
 ?>
 <!DOCTYPE html>
@@ -71,6 +71,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUser"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
+      	<?php $elements->warningBlock("userWarning"); ?>
         <table class="table table-striped table-bordered">
             <thead>
                 <td width="5%">#</td><td width="20%">用户名</td><td width="20%">PAD权限</td><td width="20%">前台权限</td><td width="20%">后台权限</td><td width="15%">操作</td>
