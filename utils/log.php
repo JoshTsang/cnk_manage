@@ -6,7 +6,7 @@
 
   <body>
 
-    <?php navBar(5); ?>
+    <?php navBar(6); ?>
 
     <div class="container-fluid">
 

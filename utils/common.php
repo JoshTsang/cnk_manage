@@ -41,8 +41,8 @@
         echo  '<li '.($active==2?'class="active"':"").'><a href="'.($active==2?'#':'userDB.php').'">用户</a></li>';
         echo  '<li '.($active==3?'class="active"':"").'><a href="'.($active==3?'#':'infoDB.php').'">信息</a></li>';
         echo  '<li '.($active==4?'class="active"':"").'><a href="'.($active==4?'#':'db.php').'">DB Structure</a></li>';
-        echo  '<li '.($active==5?'class="active"':"").'><a href="'.($active==5?'#':'log.php').'">LOG</a></li>';
-        echo  '<li '.($active==6?'class="active"':"").'><a href="'.($active==6?'#':'#').'">预留3</a></li>';
+        echo  '<li '.($active==5?'class="active"':"").'><a href="'.($active==5?'#':'sql.php').'">SQL</a></li>';
+        echo  '<li '.($active==6?'class="active"':"").'><a href="'.($active==6?'#':'log.php').'">LOG</a></li>';
         echo  '<li '.($active==7?'class="active"':"").'><a href="'.($active==7?'#':'#').'">预留4</a></li>';
         echo '</ul>';
         
