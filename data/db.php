@@ -82,9 +82,21 @@
                 
         }
         
-        //TODO
-        public function deleteUser() {
+        //TODO test
+        public function deleteUser($id) {
+            if (!$this->connectUserDB()) {
+                return false;
+            }
             
+            $sql = sprintf("Delete From %s where id=%s", USER_INFO, $id);
+            $ret = $this->userDB->exec($sql); 
+            if ($ret) {
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("exec failed:".$this->userDB->lastErrorMsg()."#sql:".$sql);
+                return FALSE;
+            }
         }
         
         public function getTableInfo() {
@@ -163,7 +175,7 @@
                                            GROUP BY sortPrintID",
                                            CATEGORIES,
                                            DISHES, CATEGORIES, PRINTERS, DISH_CATEGORY,
-                                           DISHES, DISH_CATEGORY, PRINTERS, CATEGORIES, $rowCategory[0]);
+                                           DISHES, DISH_CATEGORY, PRINTERS, DISH_CATEGORY, $rowCategory[0]);
                     $resultSet = $this->menuDB->query($sql); 
                     if ($resultSet) {
                         $printerIndex = 0;
@@ -307,7 +319,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete From %s where categoryID=%s", CATEGORIES, id);
+            $sql = sprintf("Delete From %s where categoryID=%s", CATEGORIES, $id);
             $ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -432,9 +444,21 @@
             
         }
         
-        //TODO
-        public function deleteDish() {
+        //TODO test
+        public function deleteDish($id) {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
             
+            $sql = sprintf("Delete From %s where id=%s", DISHES, $id);
+            $ret = $this->menuDB->exec($sql); 
+            if ($ret) {
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("exec failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return FALSE;
+            }
         }
         
     	private function setErrorMsg($msg) {

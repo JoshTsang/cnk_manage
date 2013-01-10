@@ -11,12 +11,20 @@
     $db = new DB();
     if ($do == 'set') {
         
+    } else if ($do == 'delete') {
+        if (isset($_GET['id'])) {
+            $ret = $db->deleteUser($_GET['id']);
+        } else {
+            $ret = $db->getError("param?id");
+        }
     } else {
         $ret = $db->getUserInfo();
-        if ($ret) {
-            echo $ret;
-        } else {
-            echo $db->getError();
-        }
     }
+    
+    if ($ret) {
+        echo $ret;
+    } else {
+        echo $db->getError();
+    }
+
 ?>
