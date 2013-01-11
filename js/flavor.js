@@ -40,6 +40,26 @@ function Flavors() {
 			}
 		});
 	}
+	
+	this.add = function() {
+		var flavor = $("#name").val();
+		if (isNull(flavor)) {
+			showWarnningBlock("#addFlavorWarning", "口味不能为空!");
+			return;
+		}
+		
+		$("#addFlavorBtn").button("loading");
+		flavors.flavors.push(flavor);
+		$.post("../orderPad/setting/saveFlavor.php", "config=" + JSON.stringify(flavors.flavors), function(data){
+			if (data == "") {
+				flavors.load();
+				$("#addFlavor").modal("hide");
+			} else {
+				showWarnningBlock("#addFlavorWarning", "提交失败!");
+			}
+			$("#addFlavorBtn").button("reset");
+		});
+	}
 }
 
 var flavors = new Flavors();
@@ -50,8 +70,16 @@ var deleteFlavor = function(index) {
 	$("#alertPositiveBtn").click({"index":index}, flavors.remove);
 }
 
+var initAddFlavorDlg = function() {
+	$("#addFlavorBtn").button("reset");
+	$("#addFlavorWarning").hide();
+	$("#name").val("");
+}
+
 $(document).ready(
 	function(){
 		flavors.init();
+		$("#addFlavorBtn").click(flavors.add);
+		$("#addFlavor").bind("show", initAddFlavorDlg);
 	}
 )

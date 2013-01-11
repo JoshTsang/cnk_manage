@@ -43,6 +43,37 @@ function Tables() {
 			}
 		});
 	}
+	
+	this.add = function() {
+		var name = $("#tableName").val();
+		var index = $("#tableIndex").val();;
+		var floor = $("#tableFloor").val();;
+		if (isNull(name)) {
+			showWarnningBlock("#addTableWarning", "桌名不能为空!");
+			return;
+		} 
+		
+		var table = new Object();
+		table.name = name;
+		if (!isNull(index)) {
+			table.index = index;
+		}
+		
+		if (!isNull(floor)) {
+			table.floor = floor;
+		}
+		$("#addTableBtn").button("loading");
+		var url = "api/tableInfo.php?do=set";
+		$.post(url, {table:$.toJSON(table)}, function(data){
+			if (data.succ == true) {
+				tables.load();
+				$("#addTable").modal("hide");
+			} else {
+				showWarnningBlock("#addTableWarning", "提交失败!");
+			}
+			$("#addTableBtn").button("reset");
+		}, "json");
+	}
 }
 
 var tables = new Tables();
@@ -52,8 +83,19 @@ var deleteTable = function(index) {
 	$("#alertPositiveBtn").click({"index":index}, tables.remove);
 }
 
+var initAddService = function() {
+	$("#addTableBtn").button("reset");
+	$("#addTableWarning").hide();
+	$("#tableName").val("");
+	$("#tableIndex").val("");
+	$("#tableFloor").val("");
+}
+
 $(document).ready(
 	function(){
 		tables.init();
+		$("#addTable").bind("show", initAddService);
+		$("#addTableBtn").unbind("click");
+		$("#addTableBtn").click(tables.add);
 	}
 )

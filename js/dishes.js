@@ -70,7 +70,7 @@ function Dishes() {
 	this.categoryId = 0;
 	
 	this.load = function(cid) {
-		categoryId = cid;
+		dishes.categoryId = cid;
 		var url = "api/dishes.php?cid=" + cid;
 		$.getJSON(url, function(data){
 			if (undefined === data.succ) {
@@ -91,7 +91,7 @@ function Dishes() {
 	}
 	
 	this.refresh = function() {
-		this.load(categoryId);
+		this.load(dishes.categoryId);
 	}
 	
 	this.remove = function(event) {
@@ -104,10 +104,92 @@ function Dishes() {
 			}
 		});
 	}
+	
+	this.add = function() {
+		var name = $("#dname").val();
+		var price = $("#price").val();
+		if (isNull(name)) {
+			showWarnningBlock("#addDishWarning", "菜名不能为空!");
+			return;
+		}
+		
+		if (!isNumber(price)) {
+			showWarnningBlock("#addDishWarning", "价格只能为数字!");
+			return;
+		}
+		
+		var dish = new Object();
+		dish.name = name;
+		dish.price = price;
+		dish.unit = $("#unit").val();
+		dish.printer = $("#printer").val();
+		dish.category = dishes.categoryId;
+		if (!isNull($("#ename").val())) {
+			dish.ename = $("#ename").val();
+		}
+		if (!isNull($("#price2").val())) {
+			if (!isNumber(price)) {
+				showWarnningBlock("#addDishWarning", "价格2只能为数字!");
+				return;
+			} else {
+				dish.price2 = $("#price2").val();
+			}
+		}
+		if (!isNull($("#price3").val())) {
+			if (!isNumber(price)) {
+				showWarnningBlock("#addDishWarning", "价格3只能为数字!");
+				return;
+			} else {
+				dish.price3 = $("#price3").val();
+			}
+		}
+		if (!isNull($("#shortcut").val())) {
+			dish.shortcut = $("#shortcut").val();
+		}
+		if (!isNull($("#discount").val())) {
+			if (!isNumber(price)) {
+				showWarnningBlock("#addDishWarning", "折扣只能为数字!");
+				return;
+			} else {
+				dish.discount = $("#discount").val();
+			}
+		}
+		if (!isNull($("#description").val())) {
+			dish.description = $("#description").val();
+		}
+		
+		//TODO 图片
+		//TODO duplited category
+		$("#addDishBtn").button("loading");
+		$.post("api/dishes.php?do=set", {dish:$.toJSON(dish)}, function(data){
+			if (true == data.succ) {
+				dishes.refresh();
+				$("#addDish").modal("hide");
+			} else {
+				showWarnningBlock("#addDishWarning", "提交失败!");
+			}
+			$("#addDishBtn").button("reset");
+		}, "json");
+	}
 }
 
 var categories = new Categories();
 var dishes = new Dishes();
+
+var initAddDishDlg = function() {
+	$("#addDishBtn").button("reset");
+	$("#addDishWarning").hide();
+	$("#dname").val("");
+	$("#ename").val("");
+	$("#price").val("");
+	$("#price2").val("");
+	$("#price3").val("");
+	$("#shortcut").val("");
+	$("#discount").val("");
+	$("#description").val("");
+	$("#unit").val("");
+	$("#printer").val("");
+}
 
 var deleteDish = function(index) {
 	showAlertDlg("请注意", "确认删除菜品 : " + dishes.dishes[index].name + ' ?');
@@ -122,5 +204,8 @@ var categoryOnClick = function(index) {
 $(document).ready(
 	function(){
 		categories.init();
+		showWarnningBlock("#addDishWarning", "提交失败!");
+		$("#addDish").bind("show", initAddDishDlg);
+		$("#addDishBtn").click(dishes.add);
 	}
 )

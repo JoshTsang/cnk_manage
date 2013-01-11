@@ -1,6 +1,8 @@
 <?php
     require "element.php";
+    require 'permission.php';
     $elements = new element();
+    $permission = new Permission();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +37,7 @@
         <h3>新建用户</h3>
       </div>
       <div class="modal-body">
+        <?php $elements->warningBlock("addUserWarning"); ?>
         <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="uname">用户名</label>
@@ -46,22 +49,23 @@
               <div class="control-group">
                 <label class="control-label" for="passwd">密码</label>
                 <div class="controls">
-                  <input type="text" id="passwd" placeholder="密码">
+                  <input type="password" id="passwd" placeholder="密码">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="pwdConfirm">确认密码</label>
                 <div class="controls">
-                  <input type="text" id="pwdConfirm" placeholder="确认密码">
+                  <input type="password" id="pwdConfirm" placeholder="确认密码">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
+              <?php $permission->permissionSelectSection(); ?>
         </form>
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <button id="addUserBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
       </div>
     </div>
     <div class="container-fluid">

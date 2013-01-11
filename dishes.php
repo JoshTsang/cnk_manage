@@ -1,5 +1,6 @@
 <?php
 	require "element.php";
+    require "data/db.php";
 	$elements = new element();
 ?>
 <!DOCTYPE html>
@@ -58,16 +59,16 @@
       <div class="modal-body">
         <form class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" for="inputEmail">序号</label>
+                <label class="control-label" for="index">序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="序号">
+                  <input type="text" id="index" placeholder="序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">更后序号</label>
+                <label class="control-label" for="indexNew">更后序号</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="更后序号">
+                  <input type="text" id="indexNew" placeholder="更后序号">
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
@@ -84,6 +85,7 @@
         <h3>新建菜品</h3>
       </div>
       <div class="modal-body">
+          <?php $elements->warningBlock("addDishWarning"); ?>
           <div style="width: 500px">
               <div style="width: 250px; float:left">
                   <form class="form-horizontal">
@@ -110,15 +112,14 @@
                     <div class="control-group">
                         <label class="control-label-custome" for="shortcut">便捷码</label>
                         <div class="controls-custome">
-                            <input class="span2" type="shortcut" placeholder="便捷码">
+                            <input id="shortcut" class="span2" type="input" placeholder="便捷码">
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label-custome" for="shortcut">分单</label>
+                        <label class="control-label-custome" for="printer">分单</label>
                         <div class="controls-custome">
-                            <select class="span2" id="shortcut">
-                                <option>热菜</option>
-                                <option>凉菜</option>
+                            <select class="span2" id="printer">
+                                <?php $elements->printerOption(); ?>
                             </select>
                         </div>
                     </div>
@@ -134,10 +135,9 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label-custome" for="unit">单位</label>
-                        <div class="controls-custome" id="unit">
-                            <select class="span2">
-                                <option>斤</option>
-                                <option>两</option>
+                        <div class="controls-custome" >
+                            <select id="unit" class="span2">
+                                <?php $elements->unitOption(); ?>
                             </select>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
         </div>
 	    <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-            <a href="#" class="btn btn-primary">确定</a>
+            <button id="addDishBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
         </div>
     </div>
     <div class="container-fluid">

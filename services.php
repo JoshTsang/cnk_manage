@@ -35,6 +35,7 @@
         <h3>新建服务</h3>
       </div>
       <div class="modal-body">
+        <?php $elements->warningBlock("addServiceWarning"); ?>
         <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="name">名称</label>
@@ -47,7 +48,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <button id="addServiceBtn" href="#" class="btn btn-primary"  data-loading-text="提交中...">确定</button>
       </div>
     </div>
     <div class="container-fluid">

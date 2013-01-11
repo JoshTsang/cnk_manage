@@ -35,6 +35,7 @@
         <h3>新建分类</h3>
       </div>
       <div class="modal-body">
+        <?php $elements->warningBlock("addCategoryWarning"); ?>
         <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="cname">名称</label>
@@ -47,7 +48,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <button id="addCategoryBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
       </div>
     </div>
     <div class="modal hide fade" id="addUnit" role="dialog">
@@ -56,6 +57,7 @@
         <h3>新建单位</h3>
       </div>
       <div class="modal-body">
+        <?php $elements->warningBlock("addUnitWarning"); ?>
         <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="unitName">名称</label>
@@ -68,7 +70,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <button id="addUnitBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
       </div>
     </div>
     <div class="modal hide fade" id="sortCategory" role="dialog">

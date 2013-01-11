@@ -93,6 +93,10 @@ function Printers() {
 			case "102":
 				printerUsefor = "厨打";
 				break;
+			case 103:
+			case "103":
+				printerUsefor = "点菜";
+				break;
 			case 200:
 			case "200":
 				printerUsefor = "停用";

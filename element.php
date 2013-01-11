@@ -1,4 +1,11 @@
 <?php
+    define('MENU_DB', '../db/dish.db3');
+    
+    define('CATEGORIES', "category");
+    define('UNITS', 'unit');
+    define("DISHES", 'dishInfo');
+    define("DISH_CATEGORY", "dishCategory");
+    define("PRINTERS", 'sortPrint');
     class element {
         public function navBar($username, $active) {
         	echo '<script type="text/javascript" src="js/lib.js"></script>';
@@ -42,6 +49,36 @@
         public function css() {
             echo '<link href="css/bootstrap.css" rel="stylesheet">
                   <link href="css/manage.css" rel="stylesheet">';
+        }
+        
+        public function unitOption() {
+            $db = new DB();
+            $ret = $db->getUnits();
+    
+            if (!$ret) {
+                echo "";
+            } else {
+                $units = json_decode($ret);
+                $count = count($units);
+                for ($i=0; $i<$count; $i++) {
+                    echo "<option value=\"".$units[$i]->id."\">".$units[$i]->name."</option>";
+                }
+            }
+        }
+        
+        public function printerOption() {
+            $db = new DB();
+            $ret = $db->getPrinters();
+    
+            if (!$ret) {
+                echo "";
+            } else {
+                $printers = json_decode($ret);
+                $count = count($printers);
+                for ($i=0; $i<$count; $i++) {
+                    echo "<option value=\"".$printers[$i]->id."\">".$printers[$i]->name."</option>";
+                }
+            }
         }
         
         private function getUserName() {

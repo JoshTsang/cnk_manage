@@ -42,3 +42,7 @@ thead td{
 .action a:hover {
 	color: #FF0000;
 }
+
+.help-inline-err {
+	color:#FF0000;
+}

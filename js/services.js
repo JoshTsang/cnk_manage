@@ -38,6 +38,26 @@ function Services() {
 			}
 		});
 	}
+	
+	this.add = function() {
+		var name = $("#name").val();
+		if (isNull(name)) {
+			showWarnningBlock("#addServiceWarning", "服务名不能为空!");
+			return;
+		} 
+		
+		$("#addServiceBtn").button("loading");
+		var url = "api/services.php?do=set&name=" + $("#name").val();
+		$.getJSON(url, function(data){
+			if (data.succ == true) {
+				services.load();
+				$("#addService").modal("hide");
+			} else {
+				showWarnningBlock("#addServiceWarning", "提交失败!");
+			}
+			$("#addServiceBtn").button("reset");
+		});
+	}
 }
 
 var services = new Services();
@@ -48,8 +68,16 @@ var deleteService = function(index) {
 	$("#alertPositiveBtn").click({"index":index}, services.remove);
 }
 
+var initAddService = function() {
+	$("#addServiceBtn").button("reset");
+	$("#addServiceWarning").hide();
+	$("#name").val("");
+}
+
 $(document).ready(
 	function(){
 		services.init();
+		$("#addServiceBtn").click(services.add);
+		$("#addService").bind("show", initAddService);
 	}
 )

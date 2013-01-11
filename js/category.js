@@ -30,6 +30,27 @@ function Categories() {
 		});
 	}
 	
+	this.add = function() {
+		var cname = $("#cname").val();
+		if (isNull(cname)) {
+			showWarnningBlock("#addCategoryWarning", "类别不能为空!");
+			return;
+		}
+		
+		//TODO duplited category
+		$("#addCategoryBtn").button("loading");
+		var category = {id:0, name:cname};
+		$.post("api/categories.php?do=set", {category:$.toJSON(category)}, function(data){
+			if (true == data.succ) {
+				categories.load();
+				$("#addCategory").modal("hide");
+			} else {
+				showWarnningBlock("#addCategoryWarning", "提交失败!");
+			}
+			$("#addCategoryBtn").button("reset");
+		}, "json");
+	}
+	
 	this.remove = function(event) {
 		var url = "api/categories.php?do=delete&id=" + categories.categories[event.data.index].id;
 		$.getJSON(url, function(data){
@@ -71,6 +92,8 @@ function CategoryPrintList() {
 			}
 		});
 	}
+	
+	
 }
 
 var deleteCategory = function(index) {
@@ -80,11 +103,19 @@ var deleteCategory = function(index) {
 	$("#alertPositiveBtn").click({"index":index}, categories.remove);
 }
 
+var initAddCategoryDlg = function() {
+	$("#addCategoryBtn").button("reset");
+	$("#addCategoryWarning").hide();
+	$("#cname").val("");
+}
+
 var categories = new Categories();
 var categoryPrintList = new CategoryPrintList();
 $(document).ready(
 	function(){
 		categories.init();
 		categoryPrintList.init();
+		$("#addCategoryBtn").click(categories.add);
+		$("#addCategory").bind("show", initAddCategoryDlg);
 	}
 )
