@@ -10,7 +10,20 @@
     
     $db = new DB();
     if ($do == 'set') {
-        
+        if (isset($_POST['table'])) {
+            $table = json_decode($_POST['table']);
+            if (@$table->id > 0) {
+                if (isset($table->newIndex)) {
+                    $ret = $db->updateTableIndex($table);
+                } else {
+                    $ret = $db->updateTable($table);
+                }
+            } else {
+                $ret = $db->addTable($table);
+            }
+        } else {
+            $ret = $db->getError("param:table?");
+        }
     } else if ($do == 'delete') {
       if (isset($_GET['id'])) {
           $ret = $db->deleteTable($_GET['id']);

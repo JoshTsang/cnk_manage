@@ -10,7 +10,12 @@
     
     $ret = "{\"succ\":\"false\"}";
     if ($do == 'set') {
-        
+        if(isset($_POST['shopinfo'])) {
+            $shopinfo = json_decode($_POST['shopinfo']);
+            if (isset($shopinfo->name)) {
+                file_put_contents(SHOP_INFO, $_POST['shopinfo']);
+            }
+        }
     } else {
         if (file_exists(SHOP_INFO)) {
             $ret = file_get_contents(SHOP_INFO);

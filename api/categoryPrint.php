@@ -10,7 +10,11 @@
     
     $db = new DB();
     if ($do == 'set') {
-        
+        if (isset($_POST['categoryPrint'])) {
+            $ret = $db->updateCategoryPrint($obj);
+        } else {
+            $ret = $db->getError("categoryPrint?");
+        }
     } else {
         $ret = $db->getCategoryPrint();
     }
