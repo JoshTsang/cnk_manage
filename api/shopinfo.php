@@ -14,6 +14,7 @@
             $shopinfo = json_decode($_POST['shopinfo']);
             if (isset($shopinfo->name)) {
                 file_put_contents(SHOP_INFO, $_POST['shopinfo']);
+                $ret = "{\"succ\":true}";
             }
         }
     } else {

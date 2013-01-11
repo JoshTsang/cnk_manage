@@ -147,8 +147,9 @@
     </div>
     <div class="tab-pane" id="tab2">
         <div class="action-bar">
+            <?php $elements->warningBlock("saveShopInfoWarning"); ?>
             <div class="pull-right">
-                <a class="btn btn-primary" href="#"><i class="icon-ok-sign"></i> 保存</a>
+                <button id="saveShopInfo" class="btn btn-primary" data-loading-text="提交中..."><i class="icon-ok-sign"></i> 保存</button>
             </div>
         </div>
         <form class="form-horizontal well">

@@ -254,7 +254,7 @@
             }
             
             $sql = sprintf("Delete from %s where id=%s", TABLE, $id);
-            $ret = $this->infoDB->exec($sql); 
+            @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -356,7 +356,7 @@
             }
             
             $sql = sprintf("Insert into %s values(null, '%s')", SERVICES, $service);
-            $ret = $this->infoDB->exec($sql); 
+            @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -372,7 +372,7 @@
             }
             
             $sql = sprintf("Delete from %s where id=%s", SERVICES, $id);
-            $ret = $this->infoDB->exec($sql); 
+            @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -389,7 +389,7 @@
             
             $categories = array();
             $sql = sprintf("select * from %s order by %s", CATEGORIES, 'categoryOrder');
-            $resultSet = $this->menuDB->query($sql); 
+            @$resultSet = $this->menuDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
                 while($row = $resultSet->fetchArray()) {
@@ -429,7 +429,7 @@
             }
             
             $sql = sprintf("INSERT INTO %s(categoryName, categoryOrder) values('%s', %s)", CATEGORIES, $category->name, $index);
-            $ret = $this->menuDB->exec($sql); 
+            @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -467,7 +467,7 @@
             }
             
             $sql = sprintf("Delete From %s where categoryID=%s", CATEGORIES, $id);
-            $ret = $this->menuDB->exec($sql); 
+            @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -517,7 +517,7 @@
             }
             
             $sql = sprintf("Insert into %s values(null, '%s')", UNITS, $unit);
-            $ret = $this->menuDB->exec($sql); 
+            @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -533,7 +533,7 @@
             }
             
             $sql = sprintf("Delete From %s where id=%s", UNITS, $id);
-            $ret = $this->menuDB->exec($sql); 
+            @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();
@@ -620,8 +620,8 @@
             if(isset($dish->discount)) {
                 $discount = $dish->discount;
             }
-            if(isset($dish->discription)) {
-                $discription = $dish->discription;
+            if(isset($dish->description)) {
+                $description = $dish->description;
             }
             
             if (isset($dish->index)) {
@@ -683,7 +683,7 @@
             }
             
             $sql = sprintf("Delete From %s where id=%s", DISHES, $id);
-            $ret = $this->menuDB->exec($sql); 
+            @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
                 return $this->getError();

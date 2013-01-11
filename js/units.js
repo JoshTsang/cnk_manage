@@ -38,16 +38,47 @@ function Units() {
 			}
 		});
 	}
+	
+	this.add = function() {
+		var name = $("#unitName").val();
+		if (isNull(name)) {
+			showWarnningBlock("#addUnit", "服务名不能为空!");
+			return;
+		} 
+		
+		$("#addUnitBtn").button("loading");
+		var url = "api/units.php?do=set&unit=" + name;
+		$.getJSON(url, function(data){
+			if (data.succ == true) {
+				units.load();
+				$("#addUnit").modal("hide");
+			} else {
+				showWarnningBlock("#addUnitWarning", "提交失败!");
+			}
+			$("#addUnitBtn").button("reset");
+		});
+	}
 }
 
 var units = new Units();
+
+var initAddUnit = function() {
+	$("#addUnitBtn").button("reset");
+	$("#addUnitWarning").hide();
+	$("#unitName").val("");
+	$("#addUnitBtn").unbind("click");
+	$("#addUnitBtn").click(units.add);
+}
+
 var deleteUnit = function(index) {
 	showAlertDlg("请注意", "确认删除单位 : " + units.units[index].name + '?');
 	$("#alertPositiveBtn").unbind('click');
 	$("#alertPositiveBtn").click({"index":index}, units.remove);
 }
+
 $(document).ready(
 	function(){
 		units.init();
+		$("#addUnit").bind("show", initAddUnit);
 	}
 )

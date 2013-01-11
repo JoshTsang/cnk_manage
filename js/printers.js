@@ -14,9 +14,10 @@ function ShopInfo() {
 	this.name;
 	this.addr;
 	this.tel;
-	this.load = false;
+	this.loaded = false;
 	
 	this.init = function() {
+		$("#saveShopInfo").click(shopInfo.save);
 		this.load();
 	}
 	
@@ -26,7 +27,7 @@ function ShopInfo() {
 				shopInfo.name = data.name;
 				shopInfo.addr = data.addr;
 				shopInfo.tel = data.tel;
-				shopInfo.load = true;
+				shopInfo.loaded = true;
 				shopInfo.show();
 			} else {
 				//TODO err handle
@@ -35,21 +36,45 @@ function ShopInfo() {
 	}
 	
 	this.show = function() {
-		if (this.load) {
+		if (this.loaded) {
 			if (this.name !== undefined && this.name != "") {
 				$("#shopname").attr("value", this.name);
 			}
 			if (this.addr !== undefined && this.addr != "") {
-				$("#shopAddr").attr("value", this.name);
+				$("#shopAddr").attr("value", this.addr);
 			}
 			if (this.tel !== undefined && this.tel != "") {
-				$("#shopTel").attr("value", this.name);
+				$("#shopTel").attr("value", this.tel);
 			}
 		}
 	}
 	
-	this.remove = function(index) {
+	this.save = function() {
+		var name = $("#shopname").val();
+		if (isNull(name)) {
+			showWarnningBlock("#saveShopInfoWarning", "店铺名称不能为空!");
+			return;
+		}
 		
+		var shop = new Object();
+		shop.name = name;
+		
+		$("#saveShopInfo").button("loading");
+		if (!isNull($("#shopAddr").val)) {
+			shop.addr = $("#shopAddr").val();
+		}
+		
+		if (!isNull($("#shopTel").val)) {
+			shop.tel = $("#shopTel").val();
+		}
+		$.post("api/shopinfo.php?do=set", {shopinfo:$.toJSON(shop)}, function(data){
+			if (true == data.succ) {
+				shopInfo.load();
+			} else {
+				showWarnningBlock("#saveShopInfoWarning", "保存失败!");
+			}
+			$("#saveShopInfo").button("reset");
+		}, "json");
 	}
 }
 
