@@ -15,29 +15,36 @@
         
         //TODO finish
         public function login($username, $upwd) {
-            $this->connectUserDB();
-             
-            $sql=sprintf("select %s, %s from %s where %s.%s = '%s'",
-                         USER_ID, USER_PWD,USER_INFO,USER_INFO,USER_NAME,$uname);
-            @$resultSet = $this->userinfoDB->query($sql);
+            if (!$this->connectUserDB()) {
+                return false;
+            }
+            
+            $sql=sprintf("select %s, %s, bgadm from %s where %s.%s = '%s'",
+                         USER_ID, USER_PWD,USER_INFO,USER_INFO,USER_NAME,$username);
+            $resultSet = $this->userDB->query($sql);
             if ($resultSet) {
                 if ($row = $resultSet->fetchArray()) {
                     $id = $row[0];
                     $pwd = $row[1];
+                    $permission = $row[2];
                 } else {
                     $this->setErrorMsg('query failed:'.$this->$userDB->lastErrorMsg().' #sql:'.$sql);
                     $this->setErrorLocation(__FILE__, __FUNCTION__, __LINE__);
                     return false;
                 }
             } else {
-                $this->setErrorMsg('query failed:'.sqlite_last_error($this->$userDB).' #sql:'.$sql);
+                $this->setErrorMsg('query failed:'.$this->$userDB->lastErrorMsg().' #sql:'.$sql);
                 $this->setErrorLocation(__FILE__, __FUNCTION__, __LINE__);
                 return false;
             }
             
-            if ($pwd == $upwd) {
-                //TODO save id,username,permission in session
-                return true;
+            if ($upwd == md5($pwd)) {
+                $_SESSION['user'] = $username;
+                $_SESSION['id'] = $id;
+                $_SESSION['permission'] = $permission;
+                $_SESSION['logedin'] = TRUE;
+                $this->setErrorNone();
+                return $this->getError();
             } else {
                 $this->setErrorMsg('pwd mismatch');
                 $this->setErrorLocation(__FILE__, __FUNCTION__, __LINE__);
@@ -101,10 +108,35 @@
         
         //TODO
         public function updateUserInfo($user) {
-                
+            if (!isset($user->name)) {
+                $this->setErrorMsg("some filed of user is missing");
+                return false;
+            }
+            
+            if (!$this->connectUserDB()) {
+                return false;
+            }
+            
+            if (isset($user->passwd) && isset($user->permissionPad)) {
+                $sql = sprintf("UPDATE userInfo SET username='%s', password='%s', permission=%s, fgadm=%s, bgadm=%s WHERE id=%s",
+                                $user->name, $user->passwd, $user->permissionPad, $user->permissionFG, $user->permissionBG, $user->id);
+            } else if (isset($user->permissionPad)){
+                $sql = sprintf("UPDATE userInfo SET username='%s', permission=%s, fgadm=%s, bgadm=%s WHERE id=%s",
+                                $user->name, $user->permissionPad, $user->permissionFG, $user->permissionBG, $user->id);
+            } else {
+                $sql = sprintf("UPDATE userInfo SET username='%s', password='%s' WHERE id=%s",
+                                $user->name, $user->passwd, $user->id);
+            }
+            @$ret = $this->userDB->exec($sql); 
+            if ($ret) {
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("exec failed:".$this->userDB->lastErrorMsg()."#sql:".$sql);
+                return FALSE;
+            }
         }
         
-        //TODO test
         public function deleteUser($id) {
             if (!$this->connectUserDB()) {
                 return false;
@@ -210,7 +242,6 @@
                 return false;
             }
             
-            //TODO sql;
             $sql = sprintf('Insert into tableInfo(tableName, status, tableOrder, tableCategory, tableArea, tableFloor) '.
                      "values('%s', 0, %s, %s, %s, %s)", $table->name, $index, $category, $tableArea, $floor);
             @$ret = $this->infoDB->exec($sql);
@@ -245,7 +276,51 @@
         }
         //TODO
         public function updateTable($table) {
+            $index = 0;
+            $floor = 1;
+            $category = 0;
+            $tableArea = 0;
+            $index = 0;
+            if (!isset($table->name)) {
+                $this->setErrorMsg("table name?");
+                return false;
+            }
+            if (isset($table->index)) {
+                $index = $table->index;
+            } else {
+                $index = $this->getMaxTableIndex();
+                if (!$index) {
+                    return FALSE;
+                }
+                $index++;
+            }
             
+            if (isset($table->floor)) {
+                $floor = $table->floor;
+            }
+            
+            if (isset($table->category)) {
+                $category = $table->category;
+            }
+            
+            if (isset($table->area)) {
+                $tableArea = $table->area;
+            }
+            
+            if (!$this->connectInfoDB()) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE tableInfo SET tableName=%s, tableOrder=%s, tableCategory=%s, tableArea=%s, tableFloor=%s WHERE id=%s'
+                     , $table->name, $index, $category, $tableArea, $floor, $table->id);
+            @$ret = $this->infoDB->exec($sql);
+            if ($ret) {
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("exec faild, err:".$this->infoDB->lastErrorMsg()."#sql:".$sql);
+                return false;
+            }
         }
         
         public function deleteTable($id) {
@@ -407,7 +482,6 @@
             return json_encode($categories);
         }
         
-        //TODO
         public function addCategory($category) {
             if (!$this->connectMenuDB()) {
                 return false;
@@ -479,7 +553,31 @@
         
         //TODO
         public function updateCategory($category) {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
             
+            if (!isset($category->name)) {
+                $this->setErrorMsg("name?");
+                return false;
+            }
+            
+            if (isset($category->index)) {
+               $index =  $category->index;
+            } else {
+                $this->setErrorMsg("index?");
+                return false;
+            }
+            
+            $sql = sprintf("UPDATE %s SET categoryName='%s', categoryOrder=%s where categoryID=%s", CATEGORIES, $category->name, $index, $category->id);
+            @$ret = $this->menuDB->exec($sql); 
+            if ($ret) {
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return false;
+            }
         }
         
         //TODO

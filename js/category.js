@@ -21,7 +21,7 @@ function Categories() {
 			    $.each(data, function(i, category){
 			      categories.categories[i] = new Category(category.id, category.name, category.index);
 			      $("#categories").append('<tr><td>' + category.index + '</td><td>' + category.name +
-			      					 '</td><td class="action"><a href="#">[修改] </a> ' +
+			      					 '</td><td class="action"><a href="javascript:updateCategory(' + i + ')">[修改] </a> ' +
 			      					 '<a href="javascript:deleteCategory(' + i + ')"> [删除]</a></td></tr>"');
 			    });
 			} else {
@@ -30,7 +30,7 @@ function Categories() {
 		});
 	}
 	
-	this.add = function() {
+	this.add = function(index) {
 		var cname = $("#cname").val();
 		if (isNull(cname)) {
 			showWarnningBlock("#addCategoryWarning", "类别不能为空!");
@@ -38,8 +38,13 @@ function Categories() {
 		}
 		
 		//TODO duplited category
+		var category = new Object();
 		$("#addCategoryBtn").button("loading");
-		var category = {id:0, name:cname};
+		if (!isNaN(index)) {
+			category.id = categories.categories[index].id;
+			category.index = categories.categories[index].index;
+		}
+		category.name = cname;
 		$.post("api/categories.php?do=set", {category:$.toJSON(category)}, function(data){
 			if (true == data.succ) {
 				categories.load();
@@ -60,6 +65,10 @@ function Categories() {
 				showWarnningBlock("#categoryWarning", "删除单位: " + categories.categories[event.data.index].name + "失败!");
 			}
 		});
+	}
+	
+	this.update = function(event) {
+		categories.add(event.data.index);
 	}
 }
 
@@ -104,9 +113,22 @@ var deleteCategory = function(index) {
 }
 
 var initAddCategoryDlg = function() {
+	$("#addCategory h2").html("新建分类");
 	$("#addCategoryBtn").button("reset");
 	$("#addCategoryWarning").hide();
 	$("#cname").val("");
+	$("#addCategoryBtn").unbind("click");
+	$("#addCategoryBtn").click(categories.add);
+}
+
+var updateCategory = function(index) {
+	$("#addCategory h2").html("修改分类");
+	$("#addCategoryBtn").button("reset");
+	$("#addCategoryWarning").hide();
+	$("#cname").val(categories.categories[index].name);
+	$("#addCategory").modal("show");
+	$("#addCategoryBtn").unbind("click");
+	$("#addCategoryBtn").click({index:index}, categories.update);
 }
 
 var categories = new Categories();
@@ -115,7 +137,6 @@ $(document).ready(
 	function(){
 		categories.init();
 		categoryPrintList.init();
-		$("#addCategoryBtn").click(categories.add);
-		$("#addCategory").bind("show", initAddCategoryDlg);
+		$("#showAddCategoryDlg").bind("click", initAddCategoryDlg);
 	}
 )

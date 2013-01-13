@@ -32,7 +32,7 @@
     <div class="modal hide fade" id="addTable" role="dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>新建桌台</h3>
+        <h3></h3>
       </div>
       <div class="modal-body">
         <?php $elements->warningBlock("addTableWarning"); ?>
@@ -95,7 +95,7 @@
       <div class="row-fluid container-custome">
       	<div class="action-bar">
       		<div class="pull-right">
-      			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTable"><i class="icon-plus"></i> 新建</button>
+      			<button id="showAddDlg" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTable"><i class="icon-plus"></i> 新建</button>
       			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortTable"><i class="icon-arrow-down"></i> 排序</button>
       		</div>
       	</div>

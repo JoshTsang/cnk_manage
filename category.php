@@ -114,7 +114,7 @@
     <div class="tab-pane active" id="tab1">
         <div class="action-bar">
             <div class="pull-right">
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory"><i class="icon-plus"></i> 新建</button>
+                <button id="showAddCategoryDlg" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory"><i class="icon-plus"></i> 新建</button>
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortCategory"><i class="icon-arrow-down"></i> 排序</button>
             </div>
         </div>

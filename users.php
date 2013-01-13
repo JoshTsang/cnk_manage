@@ -46,6 +46,7 @@
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
+              <div id="pwd">
               <div class="control-group">
                 <label class="control-label" for="passwd">密码</label>
                 <div class="controls">
@@ -60,7 +61,10 @@
                   <span style="color: #FF0000">*</span>
                 </div>
               </div>
-              <?php $permission->permissionSelectSection(); ?>
+              </div>
+              <div id="permissionSelection">
+                <?php $permission->permissionSelectSection(); ?>
+              </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -68,17 +72,30 @@
         <button id="addUserBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
       </div>
     </div>
+    <div class="modal hide fade" id="help" role="dialog" style="width: 800px;left: 40%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3></h3>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
     <div class="container-fluid">
       <div class="row-fluid container-custome">
         <div class="action-bar">
             <div class="pull-right">
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUser"><i class="icon-plus"></i> 新建</button>
+                <button id="showAddUserDlg" class="btn btn-primary" type="button" data-toggle="modal"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
       	<?php $elements->warningBlock("userWarning"); ?>
         <table class="table table-striped table-bordered">
             <thead>
-                <td width="5%">#</td><td width="20%">用户名</td><td width="20%">PAD权限</td><td width="20%">前台权限</td><td width="20%">后台权限</td><td width="15%">操作</td>
+                <td width="5%">#</td><td width="20%">用户名</td>
+                <td width="20%">PAD权限  &nbsp;&nbsp;<a href="javascript:help('permissionpad')"><i class="icon-question-sign"></i></a></td>
+                <td width="20%">前台权限  &nbsp;&nbsp;<a href="javascript:help('permissionfg')"><i class="icon-question-sign"></i></a></td>
+                <td width="20%">后台权限  &nbsp;&nbsp;<a href="javascript:help('permissionbg')"><i class="icon-question-sign"></i></a></td>
+                <td width="15%">操作</td>
             </thead>
             <tbody id="users">
             </tbody>

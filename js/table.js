@@ -24,7 +24,7 @@ function Tables() {
 			    $.each(data, function(i, table){
 			      tables.tables[i] = new Table(table.id, table.name, table.index, table.floor, table.area, table.category);
 			      $("#tables").append('<tr><td>' + table.index + '</td><td>' + table.name + '</td><td>' + table.floor +
-			      					  '</td><td class="action"><a href="#">[修改] </a> ' +
+			      					  '</td><td class="action"><a href="javascript:updateTable(' + i + ')">[修改] </a> ' +
 			      					  '<a href="javascript:deleteTable(' + i + ')"> [删除]</a></td></tr>"');
 			    });
 			} else {
@@ -44,7 +44,7 @@ function Tables() {
 		});
 	}
 	
-	this.add = function() {
+	this.add = function(id) {
 		var name = $("#tableName").val();
 		var index = $("#tableIndex").val();;
 		var floor = $("#tableFloor").val();;
@@ -62,6 +62,10 @@ function Tables() {
 		if (!isNull(floor)) {
 			table.floor = floor;
 		}
+		
+		if (!isNaN(id)) {
+			table.id = id;
+		}
 		$("#addTableBtn").button("loading");
 		var url = "api/tableInfo.php?do=set";
 		$.post(url, {table:$.toJSON(table)}, function(data){
@@ -74,6 +78,10 @@ function Tables() {
 			$("#addTableBtn").button("reset");
 		}, "json");
 	}
+	
+	this.update = function(event) {
+		tables.add(tables.tables[event.data.index].id);
+	}
 }
 
 var tables = new Tables();
@@ -83,19 +91,33 @@ var deleteTable = function(index) {
 	$("#alertPositiveBtn").click({"index":index}, tables.remove);
 }
 
+var updateTable = function(index) {
+	$("#addTableBtn").button("reset");
+	$("#addTableWarning").hide();
+	$("#tableName").val(tables.tables[index].name);
+	$("#tableIndex").val(tables.tables[index].index);
+	$("#tableFloor").val(tables.tables[index].floor);
+	$("#addTable").modal("show");
+	$("#addTable h3").html("修改桌台");
+	$("#addTableBtn").unbind("click");
+	$("#addTableBtn").click({index:index}, tables.update);
+}
+
 var initAddService = function() {
 	$("#addTableBtn").button("reset");
 	$("#addTableWarning").hide();
 	$("#tableName").val("");
 	$("#tableIndex").val("");
 	$("#tableFloor").val("");
+	$("#addTableBtn").unbind("click");
+	$("#addTableBtn").click(tables.add);
+	$("#addTable h3").html("新建桌台");
 }
 
 $(document).ready(
 	function(){
 		tables.init();
-		$("#addTable").bind("show", initAddService);
+		$("#showAddDlg").click(initAddService);
 		$("#addTableBtn").unbind("click");
-		$("#addTableBtn").click(tables.add);
 	}
 )

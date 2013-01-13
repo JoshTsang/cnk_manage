@@ -7,6 +7,14 @@
     define("DISH_CATEGORY", "dishCategory");
     define("PRINTERS", 'sortPrint');
     class element {
+        function __construct() {
+            session_start();
+            if (!$_SESSION['logedin']) {
+                $url="login.php";
+                header("Location: $url");
+            }
+        }
+        
         public function navBar($username, $active) {
         	echo '<script type="text/javascript" src="js/lib.js"></script>';
             echo '<div class="navbar navbar-inverse navbar-fixed-top">
@@ -19,9 +27,9 @@
                           </a>
                           <div class="brand brand-custome"><img src="img/logo.png" border="0" width="115px"/></div>
                           <div class="nav-collapse collapse"><p class="navbar-text pull-right">';
-            echo $this->getUserName();
-            echo ', <a href="#" class="navbar-link"> 退出</a> | <a href="../manage/index.php" class="navbar-link">回旧版</a>
-                            </p>';
+            echo '<span id="username">'.$this->getUserName().'</span>';
+            echo ', <a href="logout.php" class="navbar-link"> 退出</a> | <a href="../manage/index.php" class="navbar-link">回旧版</a>
+                            </p><span id="permission" class="hide">'.$this->getPermission().'</span>';
             echo '<ul class="nav">';
             echo  '<li '.($active==1?'class="active"':"").'><a href="'.($active==1?'#':'table.php').'">桌台</a></li>';
             echo  '<li '.($active==2?'class="active"':"").'><a href="'.($active==2?'#':'category.php').'">分类</a></li>';
@@ -82,9 +90,12 @@
         }
         
         private function getUserName() {
-            return "UserName";
+            return $_SESSION['user'];
         }
         
+        private function getPermission() {
+            return $_SESSION['permission'];
+        }
         private function alertDlg() {
             echo '<div class="modal hide fade" id="alertDlg" role="dialog">
                       <div class="modal-header">
