@@ -47,3 +47,15 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function help(what) {
+	$.post("api/help.php", {what:what}, function(data){
+			if (true == data.succ) {
+				$("#help h3").html("帮助-" + data.title);
+				$("#help .modal-body").html(data.content);
+				$("#help").modal("show");
+			} else {
+				$("#help h3").html("出错了");
+				$("#help .modal-body").html("没有找到相关帮助");
+			}
+		}, "json");
+}
