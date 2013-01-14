@@ -12,7 +12,7 @@
     jQuery(function($){
         $.scrolltotop({
         className: 'totop',
-        controlHTML : '<a href="javascript:;">回到顶部↑</a>',
+        controlHTML : '<a href="javascript:;" style="font-size: 24px">回到顶部↑</a>',
         offsety:0
        });
     });
