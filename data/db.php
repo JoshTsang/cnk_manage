@@ -398,8 +398,30 @@
         
         //TODO
         public function updateCategoryPrint($categoryPrint) {
+            if (!isset($categoryPrint->printer) || !isset($categoryPrint->category)) {
+                $this->setErrorMsg("printer?category?");
+                return FALSE;
+            }
+            $sql = sprintf("UPDATE %s SET sortPrintID=%s".
+                           " WHERE id IN (SELECT %s.id from %s, %s WHERE %s.id=%s.dishID AND categoryID=%s)",
+                           DISHES,
+                           $categoryPrint->printer,
+                           DISHES,
+                           DISHES, DISH_CATEGORY,
+                           DISHES, DISH_CATEGORY, $categoryPrint->category);
             
+            if (!$this->connectMenuDB()) {
+                return FALSE;
+            }
+            @$ret = $this->menuDB->exec($sql);
+            if ($ret) {
                 $this->updateVersion();
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("exec failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return false;
+            }
         }
 
         public function getServices() {
@@ -653,7 +675,7 @@
             
             $dishes = array();
             $sql = sprintf("select %s.id, name, shortcut, price, unitName,
-                                   description, sortPrintName, dishOrder, englishName
+                                   description, sortPrintName, dishOrder, englishName, unitID, discount 
                                    from %s, %s, %s, %s 
                                    WHERE %s.id=%s.dishID AND %s.id=unitID AND %s.id=sortPrintID AND categoryID=%s
                                    ORDER BY dishOrder",
@@ -670,8 +692,10 @@
                                    'shortcut' => $row[2],
                                    'price' => $row[3],
                                    'unitName' => $row[4],
+                                   'unitId' => $row[9],
                                    'description' => $row[5],
                                    'sortPrintName' => $row[6],
+                                   'discount' => $row[10],
                                    'index' => $row[7]);
                     $dishes[$i] = $dish;
                     $i++;
@@ -812,8 +836,58 @@
         
         //TODO
         public function updateDish($dish) {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
             
+            $sql = "UPDATE dishInfo SET ";
+            if (!isset($dish->name) || !isset($dish->price) || !isset($dish->printer) || !isset($dish->unit)) {
+                $this->setErrorMsg("name/price/printer/unit?");
+                return false;
+            } else {
+                $sql .= "name='".$dish->name."', price=".$dish->price.", sortPrintID=".$dish->printer.", unitID=".$dish->unit;
+            }
+            
+            if(isset($dish->ename)) {
+                $sql .= ", ename='".$dish->ename."'";
+            }
+            if(isset($dish->price2)) {
+                $sql .= ", priceTwo=".$dish->price2;
+            }
+            if(isset($dish->price3)) {
+                $sql .= ", priceThree=".$dish->price3;
+            }
+            if(isset($dish->shortcut)) {
+                $sql .= ", shortcut='".$dish->shortcut."'";
+            }
+            
+            if(isset($dish->discount)) {
+                $sql .= ", discount = ".$dish->discount;
+            }
+            
+            if(isset($dish->description)) {
+                $sql .= ", description='".$dish->description."'";
+            }
+            
+            if (isset($dish->index)) {
+               $sql .= ", dishOrder=".$dish->index;
+            }
+            
+            if (isset($dish->img)) {
+                $pic = $this->dishImg($dish->img);
+                $sql .= ", pictureBUrl='".$pic."'";
+            }
+            
+            $sql .= " WHERE id=".$dish->id;
+            @$ret = $this->menuDB->exec($sql); 
+            if ($ret) {
                 $this->updateVersion();
+                $this->setErrorNone();
+                return $this->getError();
+            } else {
+                $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return false;
+            }
         }
         
         //TODO test

@@ -53,16 +53,18 @@ function Categories() {
 	}
 }
 
-function Dish(id, name, ename, shortcut, price, unitName, description, printer, index) {
+function Dish(id, name, ename, shortcut, price, unitName, unitId, description, printer, index, discount) {
 	this.id = id;
 	this.name = name;
 	this.ename = ename;
 	this.shortcut = shortcut;
     this.price = price;
     this.unitName = unitName;
+    this.unitId = unitId;
     this.description = description;
     this.printer = printer;
     this.index = index;
+    this.discount = discount;
 }
 
 function Dishes() {
@@ -77,11 +79,13 @@ function Dishes() {
 				$("#dishes").html("");
 			    $.each(data, function(i, dish){
 			      dishes.dishes[i] = new Dish(dish.id, dish.name, dish.ename,
-			      						 dish.shortcut, dish.price, dish.unitName, dish.description, dish.sortPrintName, dish.index);
+			      						 dish.shortcut, dish.price, dish.unitName,
+			      						 dish.unitId, dish.description, dish.sortPrintName,
+			      						 dish.index, dish.discount);
 			      $("#dishes").append('<tr><td>' + dish.index + '</td><td>' + dish.name +  '</td><td>' + dish.ename + '</td><td>' + 
 			      					 dish.price +  '</td><td>' + dish.shortcut + '</td><td>' + dish.unitName + '</td><td>' + 
 			      					 dish.description + '</td><td>' + dish.sortPrintName + 
-			      					 '</td><td class="action"><a href="#">[修改] </a> ' +
+			      					 '</td><td class="action"><a href="javascript:updateDish(' + i + ')">[修改] </a> ' +
 			      					 '<a href="javascript:deleteDish(' + i + ')"> [删除]</a></td></tr>"');
 			    });
 			} else {
@@ -105,7 +109,7 @@ function Dishes() {
 		});
 	}
 	
-	this.add = function() {
+	this.add = function(index) {
 		var name = $("#dname").val();
 		var price = $("#price").val();
 		if (isNull(name)) {
@@ -164,14 +168,20 @@ function Dishes() {
 			dish.description = $("#description").val();
 		}
 		
-		//TODO 图片
-		//TODO duplited category
+		if (!isNaN(index)) {
+			dish.id = dishes.dishes[index].id;
+		}
+		
 		if ($("#dishIMG").val() != '') {
 			uploadImg(dish);
 		} else {
-			users.submit(dish);
+			dishes.submit(dish);
 		}
 		
+	}
+	
+	this.update = function(event) {
+		dishes.add(event.data.index);
 	}
 	
 	this.submit = function(dish) {
@@ -197,8 +207,36 @@ var initAddDishDlg = function() {
 	$.each($('form'), function(i, form) {
 		form.reset();
 	});
+	
+	$("#addDishBtn").unbind("click");
+	$("#addDishBtn").click(dishes.add);
 }
 
+var initUpdateDishDlg = function(index) {
+	$("#addDishBtn").button("reset");
+	$("#addDishWarning").hide();
+	$.each($('form'), function(i, form) {
+		form.reset();
+	});
+	$("#dname").val(dishes.dishes[index].name);
+	$("#ename").val(dishes.dishes[index].ename);
+	$("#price").val(dishes.dishes[index].price);
+	$("#price2").val("");
+	$("#price3").val("");
+	$("#shortcut").val(dishes.dishes[index].shortcut);
+	$("#discount").val(dishes.dishes[index].discount);
+	$("#description").val(dishes.dishes[index].description);
+	$("#unit").val(dishes.dishes[index].unitId);
+	$("#printer").val(dishes.dishes[index].printer);
+	
+	$("#addDishBtn").unbind("click");
+	$("#addDishBtn").click({index:index}, dishes.update);
+}
+
+var updateDish = function(index) {
+	initUpdateDishDlg(index);
+	$('#addDish').modal("show");
+}
 var deleteDish = function(index) {
 	showAlertDlg("请注意", "确认删除菜品 : " + dishes.dishes[index].name + ' ?');
 	$("#alertPositiveBtn").unbind('click');
@@ -243,7 +281,6 @@ $(document).ready(
 	function(){
 		categories.init();
 		showWarnningBlock("#addDishWarning", "提交失败!");
-		$("#addDish").bind("show", initAddDishDlg);
-		$("#addDishBtn").click(dishes.add);
+		$("#showAddDishDlg").click(initAddDishDlg);
 	}
 )

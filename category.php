@@ -1,5 +1,6 @@
 <?php
     require "element.php";
+    require "data/db.php";
     $elements = new element();
 ?>
 <!DOCTYPE html>
@@ -99,6 +100,29 @@
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
         <a href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+    <div class="modal hide fade" id="categoryPrintDlg" role="dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>分类打印</h3>
+      </div>
+      <div class="modal-body">
+          <?php $elements->warningBlock("categoryPrintWarning"); ?>
+        <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="printer">选择打印机: </label>
+                <div class="controls">
+                    <select class="span2" id="printer">
+                        <?php $elements->printerOption(); ?>
+                    </select>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        <a id="categoryPrintBtn" class="btn btn-primary">确定</a>
       </div>
     </div>
     <div class="container-fluid">

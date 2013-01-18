@@ -94,7 +94,7 @@ function CategoryPrintList() {
 			      categoryPrintList.categoryPrint[i] = new CategoryPrint(categoryPrint.id, categoryPrint.name,
 			      									 categoryPrint.printerNames, categoryPrint.printerIds);
 			      $("#categoryPrint").append('<tr><td>' + (i+1) + '</td><td>' + categoryPrint.name + '</td><td>' + categoryPrint.printerNames +
-			      					 '</td><td class="action"><a href="#">[修改] </a></td></tr>"');
+			      					 '</td><td class="action"><a href="javascript:updateCategoryPrint(' + i + ')">[修改] </a></td></tr>"');
 			    });
 			} else {
 				//TODO err handle
@@ -102,7 +102,19 @@ function CategoryPrintList() {
 		});
 	}
 	
-	
+	this.update = function(event) {
+		var cp = new Object();
+		cp.category = categoryPrintList.categoryPrint[event.data.index].cid;
+		cp.printer = $("#printer").val();
+		$.post("api/categoryPrint.php?do=set", {categoryPrint:$.toJSON(cp)}, function(data){
+		if (true == data.succ) {
+			categoryPrintList.load();
+			$("#categoryPrintDlg").modal("hide");
+		} else {
+			showWarnningBlock("#categoryPrintWarning", "保存失败！");
+		}
+	}, "json");
+	}
 }
 
 var deleteCategory = function(index) {
@@ -129,6 +141,12 @@ var updateCategory = function(index) {
 	$("#addCategory").modal("show");
 	$("#addCategoryBtn").unbind("click");
 	$("#addCategoryBtn").click({index:index}, categories.update);
+}
+
+var updateCategoryPrint = function(index) {
+	$("#categoryPrintDlg").modal("show");
+	$("#categoryPrintBtn").unbind("click");
+	$("#categoryPrintBtn").click({index:index}, categoryPrintList.update);
 }
 
 var categories = new Categories();

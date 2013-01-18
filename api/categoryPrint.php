@@ -11,6 +11,7 @@
     $db = new DB();
     if ($do == 'set') {
         if (isset($_POST['categoryPrint'])) {
+            $obj = json_decode($_POST['categoryPrint']);
             $ret = $db->updateCategoryPrint($obj);
         } else {
             $ret = $db->getError("categoryPrint?");
