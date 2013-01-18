@@ -35,4 +35,8 @@
     define('SERVICES', "serviceList");
     
     define('TABLE', "tableInfo");
+    
+    //user data
+    define('IMG_UPLOAD_PATH', '../../user_data/tmp/');
+    define('IMG_PATH', '../../user_data/img/');
 ?>

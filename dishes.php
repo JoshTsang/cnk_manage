@@ -156,7 +156,7 @@
                     <div class="control-group">
                         <label class="control-label-custome" for="dishImg">图片</label>
                         <div class="controls-custome" >
-                            <button class="btn" id="dishImg">选择文件</button>
+                            <input id="dishIMG" type="file" id="dishImg"></button>
                         </div>
                     </div>
             </form>

@@ -24,7 +24,6 @@ function Flavors() {
 	}
 	
 	this.remove = function(event) {
-		var flavor = flavors.flavors[event.data.index];
 		var flavorsNew = new Array();
 		$.each(flavors.flavors, function(i, flavor) {
 			if (i != event.data.index) {

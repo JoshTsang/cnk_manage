@@ -124,9 +124,11 @@ function Dishes() {
 		dish.unit = $("#unit").val();
 		dish.printer = $("#printer").val();
 		dish.category = dishes.categoryId;
+		
 		if (!isNull($("#ename").val())) {
 			dish.ename = $("#ename").val();
 		}
+		
 		if (!isNull($("#price2").val())) {
 			if (!isNumber(price)) {
 				showWarnningBlock("#addDishWarning", "价格2只能为数字!");
@@ -135,6 +137,7 @@ function Dishes() {
 				dish.price2 = $("#price2").val();
 			}
 		}
+		
 		if (!isNull($("#price3").val())) {
 			if (!isNumber(price)) {
 				showWarnningBlock("#addDishWarning", "价格3只能为数字!");
@@ -143,9 +146,11 @@ function Dishes() {
 				dish.price3 = $("#price3").val();
 			}
 		}
+		
 		if (!isNull($("#shortcut").val())) {
 			dish.shortcut = $("#shortcut").val();
 		}
+		
 		if (!isNull($("#discount").val())) {
 			if (!isNumber(price)) {
 				showWarnningBlock("#addDishWarning", "折扣只能为数字!");
@@ -154,12 +159,22 @@ function Dishes() {
 				dish.discount = $("#discount").val();
 			}
 		}
+		
 		if (!isNull($("#description").val())) {
 			dish.description = $("#description").val();
 		}
 		
 		//TODO 图片
 		//TODO duplited category
+		if ($("#dishIMG").val() != '') {
+			uploadImg(dish);
+		} else {
+			users.submit(dish);
+		}
+		
+	}
+	
+	this.submit = function(dish) {
 		$("#addDishBtn").button("loading");
 		$.post("api/dishes.php?do=set", {dish:$.toJSON(dish)}, function(data){
 			if (true == data.succ) {
@@ -179,22 +194,45 @@ var dishes = new Dishes();
 var initAddDishDlg = function() {
 	$("#addDishBtn").button("reset");
 	$("#addDishWarning").hide();
-	$("#dname").val("");
-	$("#ename").val("");
-	$("#price").val("");
-	$("#price2").val("");
-	$("#price3").val("");
-	$("#shortcut").val("");
-	$("#discount").val("");
-	$("#description").val("");
-	$("#unit").val("");
-	$("#printer").val("");
+	$.each($('form'), function(i, form) {
+		form.reset();
+	});
 }
 
 var deleteDish = function(index) {
 	showAlertDlg("请注意", "确认删除菜品 : " + dishes.dishes[index].name + ' ?');
 	$("#alertPositiveBtn").unbind('click');
 	$("#alertPositiveBtn").click({"index":index}, dishes.remove);
+}
+
+var uploadImg = function(dish) {
+	$("#addDishBtn").button("上传图片...");
+     var data = new FormData();
+      $.each($('#dishIMG')[0].files, function(i, file) {
+          data.append('img', file);
+      });
+     $.ajax({
+         url:'api/upload_img.php',
+         type:'POST',
+         data:data,
+         cache: false,
+         contentType: false,
+         processData: false, 
+         dataType: "json",
+         success:function(data){
+         	if (data.succ == true) {
+	         	dish.img = data.img;
+	         	dishes.submit(dish);
+         	} else {
+         		showWarnningBlock("#addDishWarning", "上传图片失败!");
+         		$("#addDishBtn").button("recet");
+         	}
+         },
+         error: function() {
+         	showWarnningBlock("#addDishWarning", "上传图片失败!");
+       		$("#addDishBtn").button("recet");
+         }
+     });
 }
 
 var categoryOnClick = function(index) {

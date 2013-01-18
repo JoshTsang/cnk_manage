@@ -399,6 +399,7 @@
         //TODO
         public function updateCategoryPrint($categoryPrint) {
             
+                $this->updateVersion();
         }
 
         public function getServices() {
@@ -543,6 +544,7 @@
             $sql = sprintf("Delete From %s where categoryID=%s", CATEGORIES, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -572,6 +574,7 @@
             $sql = sprintf("UPDATE %s SET categoryName='%s', categoryOrder=%s where categoryID=%s", CATEGORIES, $category->name, $index, $category->id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -582,7 +585,7 @@
         
         //TODO
         public function updateCategoryIndex($category) {
-            
+            $this->updateVersion();
         }
         
         public function getUnits() {
@@ -617,6 +620,7 @@
             $sql = sprintf("Insert into %s values(null, '%s')", UNITS, $unit);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -633,6 +637,7 @@
             $sql = sprintf("Delete From %s where id=%s", UNITS, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -714,7 +719,13 @@
             }
             if(isset($dish->shortcut)) {
                 $shortcut = $dish->shortcut;
+            } else {
+                $shortcut = $this->getShortcut();
+                if (!$shortcut) {
+                    return FALSE;
+                }
             }
+            
             if(isset($dish->discount)) {
                 $discount = $dish->discount;
             }
@@ -730,6 +741,10 @@
                     return false;
                 }
                 $index++;
+            }
+            
+            if (isset($dish->img)) {
+                $pic = $this->dishImg($dish->img);
             }
             
             $sql = sprintf("INSERT INTO %s values(null, '%s', '%s', '%s', %s, %s, %s, %s, %s, '%s', '%s', null, 1, 1, %s, %s)",
@@ -750,6 +765,7 @@
                      $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
                      return false;
                   }
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -769,9 +785,35 @@
               }
         }
         
+        private function getShortcut() {
+            $sql = 'SELECT max(shortcut) FROM dishInfo';
+            @$ret = $this->menuDB->query($sql);
+            if ($ret) {
+                if ($row = $ret->fetchArray()) {
+                    return $row[0] + 1;
+                } else {
+                    $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
+                    return false;
+                }
+            } else {
+                $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
+                return false;
+            }
+        }
+        
+        private function dishImg($src) {
+            $pic = md5_file(IMG_UPLOAD_PATH.$src);
+            $pathInfo = pathinfo($src);
+            $pic .= '.'.$pathInfo['extension'];
+            copy(IMG_UPLOAD_PATH.$src,IMG_PATH.$pic);
+            unlink(IMG_UPLOAD_PATH.$src);
+            return $pic;
+        }
+        
         //TODO
         public function updateDish($dish) {
             
+                $this->updateVersion();
         }
         
         //TODO test
@@ -783,6 +825,7 @@
             $sql = sprintf("Delete From %s where id=%s", DISHES, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
+                $this->updateVersion();
                 $this->setErrorNone();
                 return $this->getError();
             } else {
@@ -802,6 +845,23 @@
             if ($ret) {
                 if ($row = $ret->fetchArray()) {
                     return $row[0];
+                } else {
+                    $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
+                    return false;
+                }
+            } else {
+                $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
+                return false;
+            }
+        }
+        
+        private function updateVersion() {
+            $sql = 'SELECT id,version FROM version';
+            @$ret = $this->menuDB->query($sql);
+            if ($ret) {
+                if ($row = $ret->fetchArray()) {
+                    $sql = sprintf("UPDATE version set version=%s where id=%s", $row[1]+1, $row[0]);
+                    $ret = $this->menuDB->exec($sql);
                 } else {
                     $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
                     return false;

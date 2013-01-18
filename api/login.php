@@ -4,7 +4,7 @@
     
     $db = new DB();
     if (!isset($_POST['user'])) {
-       $ret = $db->getError('user?'); 
+       $ret = $db->getError('user?');
     } else {
         $user = json_decode($_POST['user']); 
         
