@@ -64,6 +64,7 @@
         <h3>新建打印机</h3>
       </div>
       <div class="modal-body">
+        <?php $elements->warningBlock("addPrinterWarning"); ?>
         <form class="form-horizontal">
               <div class="control-group">
                 <label class="control-label" for="name">名称</label>
@@ -83,8 +84,8 @@
                 <label class="control-label" for="type">类型</label>
                 <div class="controls">
                   <select id="type">
-                      <option>58打印机</option>
-                      <option>80打印机</option>
+                      <option value="2">80打印机</option>
+                      <option value="1">58打印机</option>
                   </select>
                 </div>
               </div>
@@ -92,8 +93,11 @@
                 <label class="control-label" for="title">抬头</label>
                 <div class="controls">
                   <select id="title">
-                      <option>顾客联</option>
-                      <option>存根联</option>
+                      <option value="存根联">存根联</option>
+                      <option value="顾客联">顾客联</option>
+                      <option value="厨房联">厨房联</option>
+                      <option value="收银联">收银联</option>
+                      <option value="统计">统计</option>
                   </select>
                 </div>
               </div>
@@ -101,9 +105,12 @@
                 <label class="control-label" for="receipt">内容</label>
                 <div class="controls">
                   <select id="receipt">
-                      <option>收银</option>
-                      <option>统计</option>
-                      <option>厨打</option>
+                      <option value="100">收银</option>
+                      <option value="101">统计</option>
+                      <option value="102">厨打</option>
+                      <option value="103">点菜</option>
+                      <option value="104">点菜（无价格）</option>
+                      <option value="200">停用</option>
                   </select>
                 </div>
               </div>
@@ -111,7 +118,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <a id="addPrinterBtn" class="btn btn-primary">确定</a>
       </div>
     </div>
     
@@ -133,7 +140,7 @@
     <div class="tab-pane active" id="tab1">
         <div class="action-bar">
             <div class="pull-right">
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addPrinter"><i class="icon-plus"></i> 新建</button>
+                <button id="showAddPrinterDlg" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addPrinter"><i class="icon-plus"></i> 新建</button>
             </div>
         </div>
       	<?php $elements->warningBlock("printerWarning"); ?>

@@ -76,6 +76,7 @@ function ShopInfo() {
 			$("#saveShopInfo").button("reset");
 		}, "json");
 	}
+	
 }
 
 function Printers() {
@@ -121,6 +122,10 @@ function Printers() {
 			case 103:
 			case "103":
 				printerUsefor = "点菜";
+			break;
+			case 104:
+			case "104":
+				printerData = "点菜（无价格）";
 				break;
 			case 200:
 			case "200":
@@ -142,12 +147,103 @@ function Printers() {
 			      $("#printers").append('<tr><td>' + (i+1) + '</td><td>' + printer.name +  '</td><td>' + printer.ip + '</td><td>' + 
 			      					 printers.getPrinterTypeStr(printer.type) +  '</td><td>' + printer.title + '</td><td>' + 
 			      					 printers.getUseforStr(printer.usefor) + 
-			      					 '</td><td class="action"><a href="#">[修改] </a> <a href="#"> [删除]</a></td></tr>"');
+			      					 '</td><td class="action"><a OnClick="javascript:showUpdateDlg(' +
+			      					 i + ')">[修改] </a> <a OnClick="javascript:deletePrinter(' +
+			      					 i + ')"> [删除]</a></td></tr>"');
 			    });
 			} else {
 				//TODO err handle
 			}
 		});
+	}
+	
+	
+	this.add = function(index) {
+		var name = $("#name").val();
+		var ip = $("#ipAddr").val();
+		var title = $("#title").val();
+		var type =$("#type").val();
+		var usefor = $("#receipt").val();
+		
+		if (isNull(name)) {
+			showWarnningBlock("#addPrinterWarning", "打印机名不能为空");
+			return false;
+		}
+		if (isNull(ip)) {
+			showWarnningBlock("#addPrinterWarning", "IP地址不能为空");
+			return false;
+		}
+		
+		if (!isValidPrinterName(name)) {
+			showWarnningBlock("#addPrinterWarning", "打印机名不合法");
+			return false;
+		}
+		
+		if (!isIP(ip)) {
+			showWarnningBlock("#addPrinterWarning", "IP地址不合法");
+			return false;
+		}
+		
+		$("#addPrinterBtn").button("loading");
+		var succ = function () {
+			printers.load();
+			$("#addPrinter").modal("hide");
+		}
+		
+		var failed = function () {
+			showWarnningBlock("#addPrinterWarning", "提交失败!");
+		}
+		
+		if (!isNaN(index)) {
+			printers.printers[index].name = name;
+			printers.printers[index].ip = ip;
+			printers.printers[index].type = type;
+			printers.printers[index].title = title;
+			printers.printers[index].usefor = usefor;
+			printers.save(succ, failed);
+		} else {
+			var p = new Printer(name, ip, type, title, usefor, 0);
+			printers.printers.push(p);
+			printers.save(succ, failed);
+		}
+	}
+	
+	this.update = function(event) {
+		printers.add(event.data.index);
+	}
+	
+	this.remove = function(event) {
+		var index = event.data.index;
+		var printersNew = new Array();
+		$.each(printers.printers, function(i, printer) {
+			if (i != index) {
+				printersNew.push(printer);
+			}
+		});
+		printers.printers = printersNew;
+		var succ = function () {
+			printers.load();
+		}
+		
+		var failed = function () {
+			showAlertDlg("请注意", "删除打印机失败！");
+			$("#alertPositiveBtn").unbind('click');
+			$("#alertPositiveBtn").click(hideAlertDlg);
+		}
+		
+		printers.save(succ, failed);
+	}
+	
+	this.save = function(succ, failed) {
+		var url="../orderPad/savePrinterSettings.php";
+		$.post(url, {config:$.toJSON(printers.printers)}, function(data){
+			if (data.length > 0) {
+				succ();
+			} else {
+				failed();
+			}
+			$("#addPrinterBtn").button("reset");
+		}, "json");
 	}
 }
 
@@ -167,9 +263,45 @@ var OnTestClick = function () {
 	});
 }
 
+var initAddPrinterDlg = function() {
+	$("#addPrinter h3").html("新建打印机");
+	$("#addPrinterWarning").hide();
+	$("#name").val("");
+	$("#ipAddr").val("");
+	$("#title").val("存根联");
+	$("#type").val("2");
+	$("#receipt").val("100");
+	$("#addPrinterBtn").unbind("click");
+	$("#addPrinterBtn").click(printers.add);
+}
+
+var initUpdatePrinterDlg = function(index) {
+	$("#addPrinter h3").html("修改打印机");
+	$("#addPrinterWarning").hide();
+	$("#name").val(printers.printers[index].name);
+	$("#ipAddr").val(printers.printers[index].ip);
+	$("#title").val(printers.printers[index].title);
+	$("#type").val(printers.printers[index].type);
+	$("#receipt").val(printers.printers[index].usefor);
+	$("#addPrinterBtn").unbind("click");
+	$("#addPrinterBtn").click({index:index},printers.update);
+}
+
+var showUpdateDlg = function(index) {
+	initUpdatePrinterDlg(index);
+	$("#addPrinter").modal("show");
+}
+
+var deletePrinter = function(index) {
+	showAlertDlg("请注意", "确认删除打印机 " + printers.printers[index].name + " ?");
+	$("#alertPositiveBtn").unbind('click');
+	$("#alertPositiveBtn").click({index:index}, printers.remove);
+}
+
 $(document).ready(
 	function(){
 		printers.init();
 		shopInfo.init();
+		$("#showAddPrinterDlg").click(initAddPrinterDlg);
 	}
 )

@@ -7,6 +7,10 @@ var showAlertDlg = function(title, msg) {
 	$("#alertDlg").modal("show");
 }
 
+var hideAlertDlg = function() {
+	$("#alertDlg").modal("hide");
+}
+
 var showWarnningBlock = function(id, msg) {
 	$(id + " #warning").html(msg)
 	$(id).show();

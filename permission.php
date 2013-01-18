@@ -59,7 +59,10 @@
         }
 
         public function toString($permission) {
-            return $this->permission[$permission];
+            if (isset($this->permission[$permission])) {
+                return $this->permission[$permission];
+            }
+            return $permission;
         }
         
         private function permissionSelect() {
