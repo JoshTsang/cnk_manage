@@ -67,6 +67,24 @@ function Categories() {
 		});
 	}
 	
+	this.sort = function() {
+		var categorySort = new Array();
+		var sortedIDs = $("#sortable" ).sortable("toArray");
+		$.each(sortedIDs, function(i, item) {
+			categorySort.push(new Category(item, 0, i+1));
+		});
+		$("#categorySortBtn").button("loading");
+		$.post("api/categories.php?do=sort", {category:$.toJSON(categorySort)}, function(data){
+			if (true == data.succ) {
+				categories.load();
+				$("#sortCategory").modal("hide");
+			} else {
+				showWarnningBlock("#sortCategoryWarning", "提交失败!");
+			}
+			$("#categorySortBtn").button("reset");
+		}, "json");
+	}
+	
 	this.update = function(event) {
 		categories.add(event.data.index);
 	}
@@ -133,6 +151,15 @@ var initAddCategoryDlg = function() {
 	$("#addCategoryBtn").click(categories.add);
 }
 
+var initCategorySortDlg = function() {
+	var categoryLi = new String();
+	$("#sortCategoryWarning").alert("close");
+	$.each(categories.categories, function(i, category){
+		categoryLi += '<li id="' + category.id + '" class="ui-state-default">' + category.name + '</li>';
+	});
+	$("#sortable").html(categoryLi);
+}
+
 var updateCategory = function(index) {
 	$("#addCategory h2").html("修改分类");
 	$("#addCategoryBtn").button("reset");
@@ -156,5 +183,7 @@ $(document).ready(
 		categories.init();
 		categoryPrintList.init();
 		$("#showAddCategoryDlg").bind("click", initAddCategoryDlg);
+		$("#showSortDlg").bind('click', initCategorySortDlg);
+		$("#categorySortBtn").bind('click', categories.sort);
 	}
 )

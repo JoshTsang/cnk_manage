@@ -82,6 +82,24 @@ function Tables() {
 	this.update = function(event) {
 		tables.add(tables.tables[event.data.index].id);
 	}
+	
+	this.sort = function() {
+		var tableSort = new Array();
+		var sortedIDs = $("#sortable" ).sortable("toArray");
+		$.each(sortedIDs, function(i, item) {
+			tableSort.push(new Table(item, 0, i + 1, 0, 0, 0));
+		});
+		$("#tableSortBtn").button("loading");
+		$.post("api/tableInfo.php?do=sort", {table:$.toJSON(tableSort)}, function(data){
+			if (true == data.succ) {
+				tables.load();
+				$("#sortTable").modal("hide");
+			} else {
+				showWarnningBlock("#sortTableWarning", "提交失败!");
+			}
+			$("#tableSortBtn").button("reset");
+		}, "json");
+	}
 }
 
 var tables = new Tables();
@@ -114,10 +132,21 @@ var initAddService = function() {
 	$("#addTable h3").html("新建桌台");
 }
 
+var initTableSortDlg = function() {
+	var tableLi = new String();
+	$("#sortTableWarning").hide();
+	$.each(tables.tables, function(i, table){
+		tableLi += '<li id="' + table.id + '" class="ui-state-default">' + table.name + '</li>';
+	});
+	$("#sortable").html(tableLi);
+}
+
 $(document).ready(
 	function(){
 		tables.init();
 		$("#showAddDlg").click(initAddService);
 		$("#addTableBtn").unbind("click");
+		$("#showSortDlg").bind('click', initTableSortDlg);
+		$("#tableSortBtn").bind('click', tables.sort);
 	}
 )

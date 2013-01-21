@@ -341,7 +341,28 @@
         
         //TODO
         public function updateTableIndex($table) {
-            
+            if (!$this->connectInfoDB()) {
+                return false;
+            }
+            $count = count($table);
+            for ($i=0; $i<$count; $i++) {
+                $sql = sprintf("UPDATE %s SET tableOrder=%s where id=%s", TABLE, -$i, $table[$i]->id);
+                @$ret = $this->infoDB->exec($sql); 
+                if (!$ret) {
+                    $this->setErrorMsg("query failed:".$this->infoDB->lastErrorMsg()."#sql:".$sql);
+                    return false;
+                }
+            }
+            for ($i=0; $i<$count; $i++) {
+                $sql = sprintf("UPDATE %s SET tableOrder=%s where id=%s", TABLE, $table[$i]->index, $table[$i]->id);
+                @$ret = $this->infoDB->exec($sql); 
+                if (!$ret) {
+                    $this->setErrorMsg("query failed:".$this->infoDB->lastErrorMsg()."#sql:".$sql);
+                    return false;
+                }
+            }
+            $this->setErrorNone();
+            return $this->getError();
         }
         
         public function getCategoryPrint() {
@@ -607,7 +628,29 @@
         
         //TODO
         public function updateCategoryIndex($category) {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
+            $count = count($category);
+            for ($i=0; $i<$count; $i++) {
+                $sql = sprintf("UPDATE %s SET categoryOrder=%s where categoryID=%s", CATEGORIES, -$i, $category[$i]->id);
+                @$ret = $this->menuDB->exec($sql); 
+                if (!$ret) {
+                    $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                    return false;
+                }
+            }
+            for ($i=0; $i<$count; $i++) {
+                $sql = sprintf("UPDATE %s SET categoryOrder=%s where categoryID=%s", CATEGORIES, $category[$i]->index, $category[$i]->id);
+                @$ret = $this->menuDB->exec($sql); 
+                if (!$ret) {
+                    $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                    return false;
+                }
+            }
             $this->updateVersion();
+            $this->setErrorNone();
+            return $this->getError();
         }
         
         public function getUnits() {

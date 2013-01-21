@@ -13,14 +13,17 @@
         if (isset($_POST['table'])) {
             $table = json_decode($_POST['table']);
             if (@$table->id > 0) {
-                if (isset($table->newIndex)) {
-                    $ret = $db->updateTableIndex($table);
-                } else {
-                    $ret = $db->updateTable($table);
-                }
+                $ret = $db->updateTable($table);
             } else {
                 $ret = $db->addTable($table);
             }
+        } else {
+            $ret = $db->getError("param:table?");
+        }
+    } else if ($do == 'sort') {
+        if (isset($_POST['table'])) {
+            $table = json_decode($_POST['table']);
+            $ret = $db->updateTableIndex($table);
         } else {
             $ret = $db->getError("param:table?");
         }

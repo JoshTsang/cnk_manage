@@ -13,12 +13,35 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+    <link href="css/jquery-ui.min.css" rel="stylesheet" />
     <?php $elements->css();?>
     <style type="text/css">
       body {
         padding-top: 60px;
         height: 100%;
       }
+      
+      #sortable {
+        list-style-type: none;
+        margin: auto;
+        padding: 0;
+        width: 100%;
+      }
+      
+      #sortable li {
+         margin: 3px 3px 3px 0;
+         padding: 7px;
+         float: left;
+         /*width: 90px;*/
+         font-size: 2em;
+         color: #FFFFFF;
+         text-align: center;
+         vertical-align: middle;
+         border: 1px;
+         border-color:#002A80;
+         background-color: #0D7BD5;
+      }
+  
     </style>
 
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -80,26 +103,15 @@
         <h3>分类排序</h3>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
-              <div class="control-group">
-                <label class="control-label" for="cIndexOrig">序号</label>
-                <div class="controls">
-                  <input type="text" id="cIndexOrig" placeholder="序号">
-                  <span style="color: #FF0000">*</span>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="cIndexNew">更后序号</label>
-                <div class="controls">
-                  <input type="text" id="cIndexNew" placeholder="更后序号">
-                  <span style="color: #FF0000">*</span>
-                </div>
-              </div>
-        </form>
+        <?php $elements->warningBlock("sortCategoryWarning"); ?>
+        <ul id="sortable">
+          
+        </ul>
       </div>
       <div class="modal-footer">
+        <span class="alert alert-info">拖拽分类排序</span>
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a href="#" class="btn btn-primary">确定</a>
+        <button id="categorySortBtn" class="btn btn-primary" data-loading-text="提交中...">确定</button>
       </div>
     </div>
     <div class="modal hide fade" id="categoryPrintDlg" role="dialog">
@@ -122,7 +134,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a id="categoryPrintBtn" class="btn btn-primary">确定</a>
+        <a class="btn btn-primary">确定</a>
       </div>
     </div>
     <div class="container-fluid">
@@ -139,7 +151,7 @@
         <div class="action-bar">
             <div class="pull-right">
                 <button id="showAddCategoryDlg" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory"><i class="icon-plus"></i> 新建</button>
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortCategory"><i class="icon-arrow-down"></i> 排序</button>
+                <button id="showSortDlg" class="btn btn-primary" type="button" data-toggle="modal" data-target="#sortCategory"><i class="icon-arrow-down"></i> 排序</button>
             </div>
         </div>
         <?php $elements->warningBlock("categoryWarning"); ?>
@@ -184,9 +196,15 @@
       </div>
     </div><!--/row-->
     </div><!--/.fluid-container-->
-    
     <?php include "footer.inc"; ?>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/category.js"></script>
     <script type="text/javascript" src="js/units.js"></script>
+    <script>
+      $(function() {
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
+      });
+    </script>
   </body>
 </html>

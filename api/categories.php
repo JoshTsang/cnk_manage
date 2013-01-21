@@ -3,7 +3,7 @@
     require '../data/db.php';
     
     if (isset($_GET['do'])) {
-        $do = $_GET['do'];
+        $do = strtolower($_GET['do']);
     } else {
         $do = 'get';
     }
@@ -13,14 +13,17 @@
         if (isset($_POST['category'])) {
             $obj = json_decode($_POST['category']);
             if (@$obj->id > 0) {
-                if (isset($obj->newIndex)) {
-                    $ret = $db->updateCategoryIndex($obj);
-                } else {
-                    $ret = $db->updateCategory($obj);
-                }
+                $ret = $db->updateCategory($obj);
             } else {
                 $ret = $db->addCategory($obj);
             }
+        } else {
+            $ret = $db->getError("param:category?");
+        }
+    } else if ($do == 'sort') {
+        if (isset($_POST['category'])) {
+            $obj = json_decode($_POST['category']);
+            $ret = $db->updateCategoryIndex($obj);
         } else {
             $ret = $db->getError("param:category?");
         }
