@@ -59,7 +59,7 @@
   <body>
       <div id="wrap">
           <div style=" margin-left: auto; margin-right: auto; width: 440px; padding-top: 18%">
-            <p style="font-size: 38px; color: #FFFFFF"><img src="img/logo.png" border="0" /> <span style="color: #559446">| </span>后台管理系统</p>
+            <p style="font-size: 38px; color: #FFFFFF;font-weight: bold;"><img src="img/logo.png" border="0" /> <span style="color: #559446;">| </span>后台管理系统</p>
           </div>
           <div style=" margin-left: auto; margin-right: auto; width: 200px; margin-top: 5%; margin-bottom: 20px" >
               <div class="alert alert-error fade in hide" id="loginErr">
