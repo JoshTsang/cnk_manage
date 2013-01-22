@@ -43,6 +43,7 @@
                 $_SESSION['id'] = $id;
                 $_SESSION['permission'] = $permission;
                 $_SESSION['logedin'] = TRUE;
+                $_SESSION['time'] = time();
                 $this->setErrorNone();
                 return $this->getError();
             } else {

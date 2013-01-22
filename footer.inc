@@ -1,7 +1,7 @@
 <footer>
     <hr/>
     <div class="footer">
-        <p >&copy; 成都普联众通科技有限公司 2013 | <a href="../manage/index.php">回到旧版</a></p>
+        <p >&copy; 成都普联众通科技有限公司 2013 | <a href="../manageV1/index.php">回到旧版</a></p>
     </div>
 </footer>
 <script src="js/jquery.min.js"></script>

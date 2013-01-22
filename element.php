@@ -12,7 +12,13 @@
             if (!$_SESSION['logedin']) {
                 $url="login.php";
                 header("Location: $url");
+            } else if ((time()-$_SESSION['time']) > 300) {
+                $_SESSION['logedin'] = false;
+                
+                $url="login.php";
+                header("Location: $url");
             }
+            $_SESSION['time'] = time();
         }
         
         public function navBar($username, $active) {
@@ -28,7 +34,7 @@
                           <div class="brand brand-custome"><img src="img/logo.png" border="0" width="115px"/></div>
                           <div class="nav-collapse collapse"><p class="navbar-text pull-right">';
             echo '<span id="username">'.$this->getUserName().'</span>';
-            echo ', <a href="logout.php" class="navbar-link"> 退出</a> | <a href="../manage/index.php" class="navbar-link">回旧版</a>
+            echo ', <a href="logout.php" class="navbar-link"> 退出</a> | <a href="../manageV1/index.php" class="navbar-link">回旧版</a>
                             </p><span id="permission" class="hide">'.$this->getPermission().'</span>';
             echo '<ul class="nav">';
             echo  '<li '.($active==1?'class="active"':"").'><a href="'.($active==1?'#':'table.php').'">桌台</a></li>';

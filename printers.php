@@ -97,6 +97,7 @@
                       <option value="顾客联">顾客联</option>
                       <option value="厨房联">厨房联</option>
                       <option value="收银联">收银联</option>
+                      <option value="结算联">结算联</option>
                       <option value="统计">统计</option>
                   </select>
                 </div>

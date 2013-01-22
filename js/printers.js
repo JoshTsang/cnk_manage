@@ -125,7 +125,7 @@ function Printers() {
 			break;
 			case 104:
 			case "104":
-				printerData = "点菜（无价格）";
+				printerUsefor = "点菜-无价格";
 				break;
 			case 200:
 			case "200":
