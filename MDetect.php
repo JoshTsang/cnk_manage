@@ -738,7 +738,7 @@ class Mobile_Detect {
             ( $this->is('Firefox') && $this->version('Firefox')>=12 ) ||
 
             // Chrome for Android - Tested on Android 4.0, 4.1 device
-            ( $this->is('Chrome') && $this->is('AndroidOS') && $this->version('Android')>=4.0 ) ||
+            //( $this->is('Chrome') && $this->is('AndroidOS') && $this->version('Android')>=4.0 ) ||
 
             // Chrome Desktop 11-21 - Tested on OS X 10.7 and Windows 7
             $this->version('Chrome')>=11 && !$isMobile ||

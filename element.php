@@ -12,7 +12,7 @@
             if (!$_SESSION['logedin']) {
                 $url="login.php";
                 header("Location: $url");
-            } else if ((time()-$_SESSION['time']) > 300) {
+            } else if ((time()-$_SESSION['time']) > 600) {
                 $_SESSION['logedin'] = false;
                 
                 $url="login.php";
@@ -22,6 +22,7 @@
         }
         
         public function navBar($username, $active) {
+            echo '<script type="text/javascript">"use strict";</script>';
         	echo '<script type="text/javascript" src="js/lib.js"></script>';
             echo '<div class="navbar navbar-inverse navbar-fixed-top">
                       <div class="navbar-inner">

@@ -32,6 +32,15 @@ function ShopInfo() {
 			} else {
 				//TODO err handle
 			}
+			$.get("../orderPad/setting/getShopName.php",function(data,status){
+			    if (status == "success") {
+			    	shopInfo.name = data;
+			    	shopInfo.show();
+			    } else {
+			    	//TODO handle err
+			    }
+			});
+			
 		});
 	}
 	
@@ -75,6 +84,13 @@ function ShopInfo() {
 			}
 			$("#saveShopInfo").button("reset");
 		}, "json");
+		$.get("../orderPad/setting/setShopName.php?shopname="+shop.name,function(data,status){
+			    if (status == "success") {
+			    	
+			    } else {
+			    	//TODO handle err
+			    }
+			});
 	}
 	
 }

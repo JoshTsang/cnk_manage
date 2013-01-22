@@ -17,7 +17,7 @@
         background-image:url(img/login.png); 
         background-size:cover; 
         background-attachment:fixed; 
-        background-color:transparent; 
+        /*background-color:transparent; */
         background-position:50% 0;
         background-clip:border-box;
         background-origin:padding-box;
@@ -58,7 +58,7 @@
 
   <body>
       <div id="wrap">
-          <div style=" margin-left: auto; margin-right: auto; width: 440px; padding-top: 18%">
+          <div style=" margin-left: auto; margin-right: auto; width: 460px; padding-top: 18%">
             <p style="font-size: 38px; color: #FFFFFF;font-weight: bold;"><img src="img/logo.png" border="0" /> <span style="color: #559446;">| </span>后台管理系统</p>
           </div>
           <div style=" margin-left: auto; margin-right: auto; width: 200px; margin-top: 5%; margin-bottom: 20px" >
