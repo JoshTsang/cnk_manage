@@ -4,7 +4,8 @@
         private $userDB;
         private $infoDB;
         private $err = array('succ' => false,
-                             'error' => 'unknown');
+                             'error' => 'unknown',
+                             'tip' => NULL);
         
         public function getError($msg = null) {
             if ($msg != null) {
@@ -19,7 +20,7 @@
                 return false;
             }
             
-            $sql=sprintf("select %s, %s, bgadm from %s where %s.%s = '%s'",
+            $sql=sprintf("SELECT %s, %s, bgadm FROM %s WHERE %s.%s = '%s'",
                          USER_ID, USER_PWD,USER_INFO,USER_INFO,USER_NAME,$username);
             $resultSet = $this->userDB->query($sql);
             if ($resultSet) {
@@ -59,7 +60,7 @@
             }
             $permission = New Permission(); 
             $users = array();
-            $sql = sprintf("select * from %s", USER_INFO);
+            $sql = sprintf("SELECT * FROM %s", USER_INFO);
             @$resultSet = $this->userDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -95,7 +96,7 @@
             }
              
             //TODO
-            $sql = sprintf("INSERT INTO userInfo(username, password, permission, fgadm, bgadm) values('%s', '%s', %s, %s, %s)",
+            $sql = sprintf("INSERT INTO userInfo(username, password, permission, fgadm, bgadm) VALUES('%s', '%s', %s, %s, %s)",
                             $user->name, $user->passwd, $user->permissionPad, $user->permissionFG, $user->permissionBG);
             @$ret = $this->userDB->exec($sql); 
             if ($ret) {
@@ -143,7 +144,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete From %s where id=%s", USER_INFO, $id);
+            $sql = sprintf("DELETE FROM %s WHERE id=%s", USER_INFO, $id);
             @$ret = $this->userDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -160,7 +161,7 @@
             }
             
             $printers = array();
-            $sql = sprintf("select * from %s", "sortPrint");
+            $sql = sprintf("SELECT * FROM %s", "sortPrint");
             $resultSet = $this->menuDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -184,7 +185,7 @@
             }
             
             $tables = array();
-            $sql = sprintf("select * from %s ORDER BY tableOrder", TABLE_INFO);
+            $sql = sprintf("SELECT * FROM %s ORDER BY tableOrder", TABLE_INFO);
             @$resultSet = $this->infoDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -243,8 +244,8 @@
                 return false;
             }
             
-            $sql = sprintf('Insert into tableInfo(tableName, status, tableOrder, tableCategory, tableArea, tableFloor) '.
-                     "values('%s', 0, %s, %s, %s, %s)", $table->name, $index, $category, $tableArea, $floor);
+            $sql = sprintf('INSERT INTO tableInfo(tableName, status, tableOrder, tableCategory, tableArea, tableFloor) '.
+                     "VALUES('%s', 0, %s, %s, %s, %s)", $table->name, $index, $category, $tableArea, $floor);
             @$ret = $this->infoDB->exec($sql);
             if ($ret) {
                 $this->setErrorNone();
@@ -329,7 +330,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete from %s where id=%s", TABLE, $id);
+            $sql = sprintf("DELETE FROM %s WHERE id=%s", TABLE, $id);
             @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -347,7 +348,7 @@
             }
             $count = count($table);
             for ($i=0; $i<$count; $i++) {
-                $sql = sprintf("UPDATE %s SET tableOrder=%s where id=%s", TABLE, -$i, $table[$i]->id);
+                $sql = sprintf("UPDATE %s SET tableOrder=%s WHERE id=%s", TABLE, -$i, $table[$i]->id);
                 @$ret = $this->infoDB->exec($sql); 
                 if (!$ret) {
                     $this->setErrorMsg("query failed:".$this->infoDB->lastErrorMsg()."#sql:".$sql);
@@ -355,7 +356,7 @@
                 }
             }
             for ($i=0; $i<$count; $i++) {
-                $sql = sprintf("UPDATE %s SET tableOrder=%s where id=%s", TABLE, $table[$i]->index, $table[$i]->id);
+                $sql = sprintf("UPDATE %s SET tableOrder=%s WHERE id=%s", TABLE, $table[$i]->index, $table[$i]->id);
                 @$ret = $this->infoDB->exec($sql); 
                 if (!$ret) {
                     $this->setErrorMsg("query failed:".$this->infoDB->lastErrorMsg()."#sql:".$sql);
@@ -372,13 +373,13 @@
             }
             
             $categoryPrintList = array();
-            $sql = sprintf("select * from %s order by %s", CATEGORIES, 'categoryOrder');
+            $sql = sprintf("SELECT * FROM %s ORDER BY %s", CATEGORIES, 'categoryOrder');
             $rsCategories = $this->menuDB->query($sql); 
             if ($rsCategories) {
                 $i = 0;
                 while($rowCategory = $rsCategories->fetchArray()) {
-                    $sql = sprintf("select %s.categoryID, categoryName, sortPrintID, sortPrintName
-                                           from %s, %s, %s, %s 
+                    $sql = sprintf("SELECT %s.categoryID, categoryName, sortPrintID, sortPrintName
+                                           FROM %s, %s, %s, %s 
                                            WHERE %s.id=%s.dishID AND %s.id=sortPrintID AND %s.categoryID=%s
                                            GROUP BY sortPrintID",
                                            CATEGORIES,
@@ -452,7 +453,7 @@
             }
             
             $services = array();
-            $sql = sprintf("select * from %s", SERVICES);
+            $sql = sprintf("SELECT * FROM %s", SERVICES);
             $resultSet = $this->infoDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -475,7 +476,7 @@
                 return false;
             }
             
-            $sql = sprintf("Insert into %s values(null, '%s')", SERVICES, $service);
+            $sql = sprintf("INSERT INTO %s VALUES(null, '%s')", SERVICES, $service);
             @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -491,7 +492,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete from %s where id=%s", SERVICES, $id);
+            $sql = sprintf("DELETE FROM %s WHERE id=%s", SERVICES, $id);
             @$ret = $this->infoDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -508,7 +509,7 @@
             }
             
             $categories = array();
-            $sql = sprintf("select * from %s order by %s", CATEGORIES, 'categoryOrder');
+            $sql = sprintf("SELECT * FROM %s ORDER BY %s", CATEGORIES, 'categoryOrder');
             @$resultSet = $this->menuDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -547,7 +548,7 @@
                 $index++;
             }
             
-            $sql = sprintf("INSERT INTO %s(categoryName, categoryOrder) values('%s', %s)", CATEGORIES, $category->name, $index);
+            $sql = sprintf("INSERT INTO %s(categoryName, categoryOrder) VALUES('%s', %s)", CATEGORIES, $category->name, $index);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->setErrorNone();
@@ -585,7 +586,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete From %s where categoryID=%s", CATEGORIES, $id);
+            $sql = sprintf("DELETE FROM %s WHERE categoryID=%s", CATEGORIES, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -615,7 +616,7 @@
                 return false;
             }
             
-            $sql = sprintf("UPDATE %s SET categoryName='%s', categoryOrder=%s where categoryID=%s", CATEGORIES, $category->name, $index, $category->id);
+            $sql = sprintf("UPDATE %s SET categoryName='%s', categoryOrder=%s WHERE categoryID=%s", CATEGORIES, $category->name, $index, $category->id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -634,7 +635,7 @@
             }
             $count = count($category);
             for ($i=0; $i<$count; $i++) {
-                $sql = sprintf("UPDATE %s SET categoryOrder=%s where categoryID=%s", CATEGORIES, -$i, $category[$i]->id);
+                $sql = sprintf("UPDATE %s SET categoryOrder=%s WHERE categoryID=%s", CATEGORIES, -$i, $category[$i]->id);
                 @$ret = $this->menuDB->exec($sql); 
                 if (!$ret) {
                     $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
@@ -642,7 +643,7 @@
                 }
             }
             for ($i=0; $i<$count; $i++) {
-                $sql = sprintf("UPDATE %s SET categoryOrder=%s where categoryID=%s", CATEGORIES, $category[$i]->index, $category[$i]->id);
+                $sql = sprintf("UPDATE %s SET categoryOrder=%s WHERE categoryID=%s", CATEGORIES, $category[$i]->index, $category[$i]->id);
                 @$ret = $this->menuDB->exec($sql); 
                 if (!$ret) {
                     $this->setErrorMsg("query failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
@@ -660,7 +661,7 @@
             }
             
             $units = array();
-            $sql = sprintf("select * from %s", UNITS);
+            $sql = sprintf("SELECT * FROM %s", UNITS);
             $resultSet = $this->menuDB->query($sql); 
             if ($resultSet) {
                 $i = 0;
@@ -683,7 +684,7 @@
                 return false;
             }
             
-            $sql = sprintf("Insert into %s values(null, '%s')", UNITS, $unit);
+            $sql = sprintf("INSERT INTO %s VALUES(null, '%s')", UNITS, $unit);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -700,7 +701,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete From %s where id=%s", UNITS, $id);
+            $sql = sprintf("DELETE FROM %s WHERE id=%s", UNITS, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -718,9 +719,9 @@
             }
             
             $dishes = array();
-            $sql = sprintf("select %s.id, name, shortcut, price, unitName,
+            $sql = sprintf("SELECT %s.id, name, shortcut, price, unitName,
                                    description, sortPrintName, dishOrder, englishName, unitID, discount 
-                                   from %s, %s, %s, %s 
+                                   FROM %s, %s, %s, %s 
                                    WHERE %s.id=%s.dishID AND %s.id=unitID AND %s.id=sortPrintID AND categoryID=%s
                                    ORDER BY dishOrder",
                                    DISHES,
@@ -815,12 +816,12 @@
                 $pic = $this->dishImg($dish->img);
             }
             
-            $sql = sprintf("INSERT INTO %s values(null, '%s', '%s', '%s', %s, %s, %s, %s, %s, '%s', '%s', null, 1, 1, %s, %s)",
+            $sql = sprintf("INSERT INTO %s VALUES(null, '%s', '%s', '%s', %s, %s, %s, %s, %s, '%s', '%s', null, 1, 1, %s, %s)",
                              DISHES,
                              $name, $ename, $shortcut, $price, $price2, $price3, $discount, $unit, $description, $pic, $printer, $index);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
-                $sql = "select id from dishInfo where dishOrder=$index";
+                $sql = "SELECT id FROM dishInfo WHERE dishOrder=$index";
                  @$ret = $this->menuDB->query($sql);
                   if ($ret) {
                       if ($row = $ret->fetchArray()) {
@@ -843,7 +844,7 @@
         }
         
         private function addDishCategoryMap($did, $cid) {
-             $sql = "INSERT INTO dishCategory values(null, $did, $cid)";
+             $sql = "INSERT INTO dishCategory VALUES(null, $did, $cid)";
              @$ret = $this->menuDB->exec($sql);
               if ($ret) {
                   return true;
@@ -940,7 +941,7 @@
                 return false;
             }
             
-            $sql = sprintf("Delete From %s where id=%s", DISHES, $id);
+            $sql = sprintf("DELETE From %s WHERE id=%s", DISHES, $id);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -978,7 +979,7 @@
             @$ret = $this->menuDB->query($sql);
             if ($ret) {
                 if ($row = $ret->fetchArray()) {
-                    $sql = sprintf("UPDATE version set version=%s where id=%s", $row[1]+1, $row[0]);
+                    $sql = sprintf("UPDATE version SET version=%s WHERE id=%s", $row[1]+1, $row[0]);
                     $ret = $this->menuDB->exec($sql);
                 } else {
                     $this->setErrorMsg("getMaxTableIndex failed, #sql:".$sql);
@@ -994,6 +995,10 @@
             $this->err['error'] = $msg;
         }
 
+        private function setTip($tip) {
+            $this->err['tip'] = $tip;
+        }
+        
         private function setErrorLocation($file, $func, $line) {
             $this->err['location'] = basename($file)." : $func : $line";    
         }
