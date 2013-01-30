@@ -21,10 +21,16 @@
             $ret = $db->getError("dish?");
         }
     } else if ($do == 'delete') {
-      if (isset($_GET['id'])) {
-          $ret = $db->deleteDish($_GET['id']);
+      if (isset($_GET['id']) && isset($_GET['cid'])) {
+          $ret = $db->deleteDish($_GET['id'], $_GET['cid']);
       } else {
-          $ret = $db->getError("param:id?");
+          $ret = $db->getError("param:id?");  
+      }
+    } else if ($do == 'query') {
+        if(isset($_POST['dish'])) {
+            $ret = $db->queryDish(json_decode($_POST['dish']));
+        } else {
+          $ret = $db->getError("param:dish?");  
       }
     } else {
         if (isset($_GET['cid'])) {

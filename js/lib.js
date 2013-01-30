@@ -12,8 +12,15 @@ var hideAlertDlg = function() {
 }
 
 var showWarnningBlock = function(id, msg) {
-	$(id + " #warning").html(msg)
-	$(id).show();
+	$(id).html('<div class="alert alert-error fade in">' +
+                    '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '<span>' + msg + '</span></div>');
+}
+
+var showInfoBlock = function(id, msg) {
+	$(id).html('<div class="alert alert-info fade in">' +
+                    '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '<span>' + msg + '</span></div>');
 }
 
 function isIP(strIP) {

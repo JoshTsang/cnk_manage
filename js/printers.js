@@ -23,7 +23,7 @@ function ShopInfo() {
 	
 	this.load = function() {
 		$.getJSON("api/shopinfo.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				shopInfo.name = data.name;
 				shopInfo.addr = data.addr;
 				shopInfo.tel = data.tel;
@@ -77,7 +77,7 @@ function ShopInfo() {
 			shop.tel = $("#shopTel").val();
 		}
 		$.post("api/shopinfo.php?do=set", {shopinfo:$.toJSON(shop)}, function(data){
-			if (true == data.succ) {
+			if (0 == data.err_code) {
 				shopInfo.load();
 			} else {
 				showWarnningBlock("#saveShopInfoWarning", "保存失败!");
@@ -156,7 +156,7 @@ function Printers() {
 	
 	this.load = function() {
 		$.getJSON("../orderPad/setting/getPrinterSetting.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#printers").html("");
 			    $.each(data, function(i, printer){
 			      printers.printers[i] = new Printer(printer.name, printer.ip, printer.type, printer.title, printer.usefor, printer.id);
@@ -281,7 +281,7 @@ var OnTestClick = function () {
 
 var initAddPrinterDlg = function() {
 	$("#addPrinter h3").html("新建打印机");
-	$("#addPrinterWarning").hide();
+	$("#addPrinterWarning").html("");
 	$("#name").val("");
 	$("#ipAddr").val("");
 	$("#title").val("存根联");
@@ -293,7 +293,7 @@ var initAddPrinterDlg = function() {
 
 var initUpdatePrinterDlg = function(index) {
 	$("#addPrinter h3").html("修改打印机");
-	$("#addPrinterWarning").hide();
+	$("#addPrinterWarning").html("");
 	$("#name").val(printers.printers[index].name);
 	$("#ipAddr").val(printers.printers[index].ip);
 	$("#title").val(printers.printers[index].title);

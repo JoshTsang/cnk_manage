@@ -17,7 +17,7 @@ function Categories() {
 	
 	this.load = function() {
 		$.getJSON("api/categories.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#categories").html("");
 			    $.each(data, function(i, category){
 			      categories.categories[i] = new Category(category.id, category.name, category.index);
@@ -75,7 +75,7 @@ function Dishes() {
 		dishes.categoryId = cid;
 		var url = "api/dishes.php?cid=" + cid;
 		$.getJSON(url, function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#dishes").html("");
 			    $.each(data, function(i, dish){
 			      dishes.dishes[i] = new Dish(dish.id, dish.name, dish.ename,
@@ -99,14 +99,35 @@ function Dishes() {
 	}
 	
 	this.remove = function(event) {
-		var url = "api/dishes.php?do=delete&id=" + dishes.dishes[event.data.index].id;
+		var url = "api/dishes.php?do=delete&id=" + dishes.dishes[event.data.index].id + "&cid=" + dishes.categoryId;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				dishes.refresh();
 			} else {
 				showWarnningBlock("#dishWarning", "删除菜品: " + dishes.dishes[event.data.index].name + "失败!");
 			}
 		});
+	}
+	
+	this.nameDuplicateCheck = function() {
+		var name = $("#dname").val();
+		if (isNull(name)) {
+			console.log("null");
+			return;
+		}
+		
+		var dish = new Object();
+		dish.name = name;
+		var categories = "";
+		$.post("api/dishes.php?do=query", {dish:$.toJSON(dish)}, function(data){
+			if (data.category.length > 0) {
+				$.each(data.category, function(i, category) {
+					categories += category + ',';
+				});
+				
+				showInfoBlock("#nameInfo", "该菜名已在" + categories.substr(0, categories.length-1) + "中,修改会同时对他们起作用！");
+			}
+		}, "json");
 	}
 	
 	this.add = function(index) {
@@ -187,7 +208,7 @@ function Dishes() {
 	this.submit = function(dish) {
 		$("#addDishBtn").button("loading");
 		$.post("api/dishes.php?do=set", {dish:$.toJSON(dish)}, function(data){
-			if (true == data.succ) {
+			if (0 == data.err_code) {
 				dishes.refresh();
 				$("#addDish").modal("hide");
 			} else {
@@ -203,18 +224,19 @@ var dishes = new Dishes();
 
 var initAddDishDlg = function() {
 	$("#addDishBtn").button("reset");
-	$("#addDishWarning").hide();
+	$("#addDishWarning").html("");
 	$.each($('form'), function(i, form) {
 		form.reset();
 	});
 	
+	$('#dname').change(dishes.nameDuplicateCheck);
 	$("#addDishBtn").unbind("click");
 	$("#addDishBtn").click(dishes.add);
 }
 
 var initUpdateDishDlg = function(index) {
 	$("#addDishBtn").button("reset");
-	$("#addDishWarning").hide();
+	$("#addDishWarning").html("");
 	$.each($('form'), function(i, form) {
 		form.reset();
 	});
@@ -258,7 +280,7 @@ var uploadImg = function(dish) {
          processData: false, 
          dataType: "json",
          success:function(data){
-         	if (data.succ == true) {
+         	if (data.err_code == 0) {
 	         	dish.img = data.img;
 	         	dishes.submit(dish);
          	} else {

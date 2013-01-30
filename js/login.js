@@ -21,7 +21,7 @@ var login = function() {
 	
 	$("#login").html('<img style="width:25px;height:25px;" src="img/loading_circle.gif">');
 	$.post("api/login.php", {user:$.toJSON(user)}, function(data){
-		if (true == data.succ) {
+		if (0 == data.err_code) {
 			relocate();
 		} else {
 			showWarnningBlock("#loginErr", "用户名密码错误!");

@@ -15,7 +15,7 @@ function Services() {
 	
 	this.load = function() {
 		$.getJSON("api/services.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#services").html("");
 			    $.each(data, function(i, service){
 			      services.services[i] = new Service(service.id, service.service);
@@ -31,7 +31,7 @@ function Services() {
 	this.remove = function(event) {
 		var url = "api/services.php?do=delete&id=" + services.services[event.data.index].id;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				services.load();
 			} else {
 				showWarnningBlock("#serviceWarning", "删除服务: " + services.services[event.data.index].name + "失败!");
@@ -49,7 +49,7 @@ function Services() {
 		$("#addServiceBtn").button("loading");
 		var url = "api/services.php?do=set&name=" + $("#name").val();
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				services.load();
 				$("#addService").modal("hide");
 			} else {
@@ -70,7 +70,7 @@ var deleteService = function(index) {
 
 var initAddService = function() {
 	$("#addServiceBtn").button("reset");
-	$("#addServiceWarning").hide();
+	$("#addServiceWarning").html("");
 	$("#name").val("");
 }
 

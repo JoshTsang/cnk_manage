@@ -84,10 +84,11 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>新建菜品</h3>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-y:visible;">
           <?php $elements->warningBlock("addDishWarning"); ?>
-          <div style="width: 500px">
-              <div style="width: 250px; float:left">
+          <?php $elements->alert("nameInfo"); ?>
+          <table style="width: 480px">
+              <tr><td>
                   <form class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label-custome" for="dname">名称</label>
@@ -112,7 +113,7 @@
                     <div class="control-group">
                         <label class="control-label-custome" for="shortcut">便捷码</label>
                         <div class="controls-custome">
-                            <input id="shortcut" class="span2" type="input" placeholder="便捷码">
+                            <input id="shortcut" class="span2" type="text" placeholder="便捷码">
                         </div>
                     </div>
                     <div class="control-group">
@@ -124,8 +125,8 @@
                         </div>
                     </div>
                     </form>
-              </div>
-              <div style="width: 250px; float:right">
+              </td>
+              <td>
                   <form class="form-horizontal">
                   <div class="control-group">
                         <label class="control-label-custome" for="ename">英文名</label>
@@ -160,14 +161,16 @@
                         </div>
                     </div>
             </form>
-              </div>
-          </div>
-            <form class="form-horizontal">
+              </tr>
+              
+          </table>
+          <form class="form-horizontal" style="width: 500px;position: bottom">
                 <label class="control-label-custome" for="description">描述</label>
                 <div class="controls-custome">
                     <input style="width: 410px" type="text" id="description" placeholder="描述">
                 </div>
-            </form>
+          </form>
+            
         </div>
 	    <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>

@@ -15,7 +15,7 @@ function Units() {
 	
 	this.load = function() {
 		$.getJSON("api/units.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#units").html("");
 			    $.each(data, function(i, unit){
 			      units.units[i] = new Unit(unit.id, unit.name);
@@ -31,7 +31,7 @@ function Units() {
 	this.remove = function(event) {
 		var url = "api/units.php?do=delete&id=" + units.units[event.data.index].id;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				units.load();
 			} else {
 				showWarnningBlock("#unitWarning", "删除单位: " + units.units[event.data.index].name + "失败!");
@@ -42,14 +42,14 @@ function Units() {
 	this.add = function() {
 		var name = $("#unitName").val();
 		if (isNull(name)) {
-			showWarnningBlock("#addUnit", "服务名不能为空!");
+			showWarnningBlock("#addUnitWarning", "服务名不能为空!");
 			return;
 		} 
 		
 		$("#addUnitBtn").button("loading");
 		var url = "api/units.php?do=set&unit=" + name;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				units.load();
 				$("#addUnit").modal("hide");
 			} else {
@@ -64,7 +64,7 @@ var units = new Units();
 
 var initAddUnit = function() {
 	$("#addUnitBtn").button("reset");
-	$("#addUnitWarning").hide();
+	$("#addUnitWarning").html("");
 	$("#unitName").val("");
 	$("#addUnitBtn").unbind("click");
 	$("#addUnitBtn").click(units.add);

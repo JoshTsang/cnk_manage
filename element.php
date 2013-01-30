@@ -55,12 +55,14 @@
         }
 
         public function warningBlock($id) {
-            echo '<div class="alert alert-error fade in hide" id="'.$id.'">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <span id="warning"></span>
-                    </div>';
+            $this->alert($id);
         }
 
+        public function alert($id) {
+            echo '<div id="'.$id.'">
+                    </div>';
+        }
+        
         public function css() {
             echo '<link href="css/bootstrap.css" rel="stylesheet">
                   <link href="css/manage.css" rel="stylesheet">';

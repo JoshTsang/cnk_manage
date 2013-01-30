@@ -19,7 +19,7 @@ function Tables() {
 	
 	this.load = function() {
 		$.getJSON("api/tableInfo.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#tables").html("");
 			    $.each(data, function(i, table){
 			      tables.tables[i] = new Table(table.id, table.name, table.index, table.floor, table.area, table.category);
@@ -36,7 +36,7 @@ function Tables() {
 	this.remove = function(event) {
 		var url = "api/tableInfo.php?do=delete&id=" + tables.tables[event.data.index].id;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				tables.load();
 			} else {
 				showWarnningBlock("#tableWarning", "删除桌台: " + tables.tables[event.data.index].name + "失败!");	
@@ -69,7 +69,7 @@ function Tables() {
 		$("#addTableBtn").button("loading");
 		var url = "api/tableInfo.php?do=set";
 		$.post(url, {table:$.toJSON(table)}, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				tables.load();
 				$("#addTable").modal("hide");
 			} else {
@@ -91,7 +91,7 @@ function Tables() {
 		});
 		$("#tableSortBtn").button("loading");
 		$.post("api/tableInfo.php?do=sort", {table:$.toJSON(tableSort)}, function(data){
-			if (true == data.succ) {
+			if (0 == data.err_code) {
 				tables.load();
 				$("#sortTable").modal("hide");
 			} else {
@@ -111,7 +111,7 @@ var deleteTable = function(index) {
 
 var updateTable = function(index) {
 	$("#addTableBtn").button("reset");
-	$("#addTableWarning").hide();
+	$("#addTableWarning").html("");
 	$("#tableName").val(tables.tables[index].name);
 	$("#tableIndex").val(tables.tables[index].index);
 	$("#tableFloor").val(tables.tables[index].floor);
@@ -123,7 +123,7 @@ var updateTable = function(index) {
 
 var initAddService = function() {
 	$("#addTableBtn").button("reset");
-	$("#addTableWarning").hide();
+	$("#addTableWarning").html("");
 	$("#tableName").val("");
 	$("#tableIndex").val("");
 	$("#tableFloor").val("");
@@ -134,7 +134,7 @@ var initAddService = function() {
 
 var initTableSortDlg = function() {
 	var tableLi = new String();
-	$("#sortTableWarning").hide();
+	$("#sortTableWarning").html("");
 	$.each(tables.tables, function(i, table){
 		tableLi += '<li id="' + table.id + '" class="ui-state-default">' + table.name + '</li>';
 	});

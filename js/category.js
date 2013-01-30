@@ -16,7 +16,7 @@ function Categories() {
 	
 	this.load = function() {
 		$.getJSON("api/categories.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#categories").html("");
 			    $.each(data, function(i, category){
 			      categories.categories[i] = new Category(category.id, category.name, category.index);
@@ -46,7 +46,7 @@ function Categories() {
 		}
 		category.name = cname;
 		$.post("api/categories.php?do=set", {category:$.toJSON(category)}, function(data){
-			if (true == data.succ) {
+			if (0 == data.err_code) {
 				categories.load();
 				$("#addCategory").modal("hide");
 			} else {
@@ -59,7 +59,7 @@ function Categories() {
 	this.remove = function(event) {
 		var url = "api/categories.php?do=delete&id=" + categories.categories[event.data.index].id;
 		$.getJSON(url, function(data){
-			if (data.succ == true) {
+			if (data.err_code == 0) {
 				categories.load();
 			} else {
 				showWarnningBlock("#categoryWarning", "删除单位: " + categories.categories[event.data.index].name + "失败!");
@@ -75,7 +75,7 @@ function Categories() {
 		});
 		$("#categorySortBtn").button("loading");
 		$.post("api/categories.php?do=sort", {category:$.toJSON(categorySort)}, function(data){
-			if (true == data.succ) {
+			if (0 == data.err_code) {
 				categories.load();
 				$("#sortCategory").modal("hide");
 			} else {
@@ -106,7 +106,7 @@ function CategoryPrintList() {
 	
 	this.load = function() {
 		$.getJSON("api/categoryPrint.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#categoryPrint").html("");
 			    $.each(data, function(i, categoryPrint){
 			      categoryPrintList.categoryPrint[i] = new CategoryPrint(categoryPrint.id, categoryPrint.name,
@@ -125,7 +125,7 @@ function CategoryPrintList() {
 		cp.category = categoryPrintList.categoryPrint[event.data.index].cid;
 		cp.printer = $("#printer").val();
 		$.post("api/categoryPrint.php?do=set", {categoryPrint:$.toJSON(cp)}, function(data){
-		if (true == data.succ) {
+		if (0 == data.err_code) {
 			categoryPrintList.load();
 			$("#categoryPrintDlg").modal("hide");
 		} else {
@@ -145,7 +145,7 @@ var deleteCategory = function(index) {
 var initAddCategoryDlg = function() {
 	$("#addCategory h2").html("新建分类");
 	$("#addCategoryBtn").button("reset");
-	$("#addCategoryWarning").hide();
+	$("#addCategoryWarning").html("");
 	$("#cname").val("");
 	$("#addCategoryBtn").unbind("click");
 	$("#addCategoryBtn").click(categories.add);
@@ -163,7 +163,7 @@ var initCategorySortDlg = function() {
 var updateCategory = function(index) {
 	$("#addCategory h2").html("修改分类");
 	$("#addCategoryBtn").button("reset");
-	$("#addCategoryWarning").hide();
+	$("#addCategoryWarning").html("");
 	$("#cname").val(categories.categories[index].name);
 	$("#addCategory").modal("show");
 	$("#addCategoryBtn").unbind("click");

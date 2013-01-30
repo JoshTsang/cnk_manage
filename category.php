@@ -134,7 +134,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-        <a class="btn btn-primary">确定</a>
+        <a id="categoryPrintBtn" class="btn btn-primary">确定</a>
       </div>
     </div>
     <div class="container-fluid">

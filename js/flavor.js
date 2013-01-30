@@ -10,7 +10,7 @@ function Flavors() {
 	
 	this.load = function() {
 		$.getJSON("../orderPad/getFlavor.php", function(data){
-			if (undefined === data.succ) {
+			if (undefined === data.err_code) {
 				$("#flavors").html("");
 			    $.each(data, function(i, flavor){
 			      flavors.flavors[i] = flavor;
@@ -71,7 +71,7 @@ var deleteFlavor = function(index) {
 
 var initAddFlavorDlg = function() {
 	$("#addFlavorBtn").button("reset");
-	$("#addFlavorWarning").hide();
+	$("#addFlavorWarning").html("");
 	$("#name").val("");
 }
 

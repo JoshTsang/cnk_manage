@@ -3,8 +3,8 @@
         private $menuDB;
         private $userDB;
         private $infoDB;
-        private $err = array('succ' => false,
-                             'error' => 'unknown',
+        private $err = array('err_code' => 0,
+                             'err_msg' => 'unknown',
                              'tip' => NULL);
         
         public function getError($msg = null) {
@@ -29,12 +29,12 @@
                     $pwd = $row[1];
                     $permission = $row[2];
                 } else {
-                    $this->setErrorMsg('query failed:'.$this->$userDB->lastErrorMsg().' #sql:'.$sql);
+                    $this->setErrorMsg('query failed:'.$this->userDB->lastErrorMsg().' #sql:'.$sql);
                     $this->setErrorLocation(__FILE__, __FUNCTION__, __LINE__);
                     return false;
                 }
             } else {
-                $this->setErrorMsg('query failed:'.$this->$userDB->lastErrorMsg().' #sql:'.$sql);
+                $this->setErrorMsg('query failed:'.$this->userDB->lastErrorMsg().' #sql:'.$sql);
                 $this->setErrorLocation(__FILE__, __FUNCTION__, __LINE__);
                 return false;
             }
@@ -935,13 +935,38 @@
             }
         }
         
-        //TODO test
-        public function deleteDish($id) {
+        public function queryDish($dish) {
             if (!$this->connectMenuDB()) {
                 return false;
             }
             
-            $sql = sprintf("DELETE From %s WHERE id=%s", DISHES, $id);
+            $sql = sprintf("SELECT categoryName FROM %s, %s, %s WHERE %s.name like '%s' AND %s.id = %s.dishID AND %s.categoryID = %s.categoryID",
+                             DISHES, DISH_CATEGORY, CATEGORIES,
+                             DISHES, $dish->name, DISHES, DISH_CATEGORY, CATEGORIES, DISH_CATEGORY);
+            
+            $ret = $this->menuDB->query($sql);
+            if ($ret) {
+                $categories = array();
+                $i = 0;
+                while ($row = $ret->fetchArray()) {
+                    $categories[$i] = $row[0];
+                }
+                
+                $ret = array('category' => $categories);
+                return json_encode($ret);
+            } else {
+                $this->setErrorMsg("exec failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
+                return FALSE;
+            }
+        }
+        
+        //TODO test
+        public function deleteDish($id, $cid) {
+            if (!$this->connectMenuDB()) {
+                return false;
+            }
+            
+            $sql = sprintf("DELETE FROM %s WHERE dishID=%s AND categoryID=%s", DISH_CATEGORY, $id, $cid);
             @$ret = $this->menuDB->exec($sql); 
             if ($ret) {
                 $this->updateVersion();
@@ -992,7 +1017,8 @@
         }
         
     	private function setErrorMsg($msg) {
-            $this->err['error'] = $msg;
+    	    $this->err['err_code'] = 1;
+            $this->err['err_msg'] = $msg;
         }
 
         private function setTip($tip) {
@@ -1004,7 +1030,7 @@
         }
 
         private function setErrorNone() {
-            $this->err['succ'] = TRUE;
+            $this->err['err_code'] = 0;
         }
 
         private function connectMenuDB() {
