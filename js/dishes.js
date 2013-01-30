@@ -225,6 +225,7 @@ var dishes = new Dishes();
 var initAddDishDlg = function() {
 	$("#addDishBtn").button("reset");
 	$("#addDishWarning").html("");
+	$("#nameInfo").html("");
 	$.each($('form'), function(i, form) {
 		form.reset();
 	});
@@ -237,6 +238,7 @@ var initAddDishDlg = function() {
 var initUpdateDishDlg = function(index) {
 	$("#addDishBtn").button("reset");
 	$("#addDishWarning").html("");
+	$("#nameInfo").html("");
 	$.each($('form'), function(i, form) {
 		form.reset();
 	});

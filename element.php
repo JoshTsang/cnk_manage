@@ -12,7 +12,7 @@
             if (!$_SESSION['logedin']) {
                 $url="login.php";
                 header("Location: $url");
-            } else if ((time()-$_SESSION['time']) > 600) {
+            } else if ((time()-$_SESSION['time']) > 1800) {
                 $_SESSION['logedin'] = false;
                 
                 $url="login.php";

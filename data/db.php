@@ -767,7 +767,8 @@
                 return false;
             }
             
-            if (!isset($dish->name) || !isset($dish->price) || !isset($dish->printer) || !isset($dish->unit)) {
+            if (!isset($dish->name) || !isset($dish->price) ||
+                !isset($dish->printer) || !isset($dish->unit) || !isset($dish->category)) {
                 $this->setErrorMsg("name/price/printer/unit?");
                 return false;
             } else {
@@ -775,6 +776,22 @@
                 $price = $dish->price;
                 $printer = $dish->printer;
                 $unit = $dish->unit;
+                $ret = json_decode($this->queryDish($dish));
+                if ($ret->id > 0) {
+                    $dish->id = $ret->id;
+                    
+                    if (FALSE === $this->updateDish($dish)) {
+                        return FALSE;
+                    }
+                    $ret = $this->addDishCategoryMap($ret->id, $dish->category);
+                    if (!$ret) {
+                        return FALSE;
+                    }
+                      
+                    $this->updateVersion();
+                    $this->setErrorNone();
+                    return $this->getError();
+                }
             }
             
             if(isset($dish->ename)) {
@@ -886,7 +903,8 @@
             }
             
             $sql = "UPDATE dishInfo SET ";
-            if (!isset($dish->name) || !isset($dish->price) || !isset($dish->printer) || !isset($dish->unit)) {
+            if (!isset($dish->name) || !isset($dish->price) ||
+                !isset($dish->printer) || !isset($dish->unit)|| !isset($dish->id)) {
                 $this->setErrorMsg("name/price/printer/unit?");
                 return false;
             } else {
@@ -940,19 +958,24 @@
                 return false;
             }
             
-            $sql = sprintf("SELECT categoryName FROM %s, %s, %s WHERE %s.name like '%s' AND %s.id = %s.dishID AND %s.categoryID = %s.categoryID",
-                             DISHES, DISH_CATEGORY, CATEGORIES,
+            $sql = sprintf("SELECT %s.id, categoryName FROM %s, %s, %s WHERE %s.name like '%s' AND %s.id = %s.dishID AND %s.categoryID = %s.categoryID",
+                             DISHES, DISHES, DISH_CATEGORY, CATEGORIES,
                              DISHES, $dish->name, DISHES, DISH_CATEGORY, CATEGORIES, DISH_CATEGORY);
             
             $ret = $this->menuDB->query($sql);
             if ($ret) {
                 $categories = array();
                 $i = 0;
+                
+                $id = 0;
                 while ($row = $ret->fetchArray()) {
-                    $categories[$i] = $row[0];
+                    $id = $row[0];
+                    $categories[$i] = $row[1];
+                    $i++;
                 }
                 
-                $ret = array('category' => $categories);
+                $ret = array('id' => $id,
+                             'category' => $categories);
                 return json_encode($ret);
             } else {
                 $this->setErrorMsg("exec failed:".$this->menuDB->lastErrorMsg()."#sql:".$sql);
