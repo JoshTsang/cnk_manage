@@ -1,3 +1,15 @@
+<?php
+    require 'define.inc';
+    session_start();
+    if (isset($_SESSION['logedin'])) {
+        if ($_SESSION['logedin'] && (time()-$_SESSION['time']) < LOGOUT_TIME) {
+            $url="table.php";
+            header("Location: $url");
+        }
+        $_SESSION['time'] = time();    
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,9 +74,7 @@
             <p style="font-size: 38px; color: #FFFFFF;font-weight: bold;"><img src="img/logo.png" border="0" /> <span style="color: #559446;">| </span>后台管理系统</p>
           </div>
           <div style=" margin-left: auto; margin-right: auto; width: 200px; margin-top: 5%; margin-bottom: 20px" >
-              <div class="alert alert-error fade in hide" id="loginErr">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <span id="warning"></span>
+              <div id="loginErr">
               </div>
               <form>
                   <input id="username" type="text" id="uname" placeholder="用户名"><br/>

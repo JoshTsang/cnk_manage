@@ -41,6 +41,7 @@ var relocate = function() {
 $(document).ready(
 	function(){
 		$("#login").click(OnLoginClick);
+		$("#username").focus();
 		$(document).keypress(function(){  
 		    if (event.keyCode == 13) {  
 		        login();

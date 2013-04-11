@@ -313,7 +313,7 @@
                 return false;
             }
             
-            $sql = sprintf('UPDATE tableInfo SET tableName=%s, tableOrder=%s, tableCategory=%s, tableArea=%s, tableFloor=%s WHERE id=%s'
+            $sql = sprintf('UPDATE tableInfo SET tableName="%s", tableOrder=%s, tableCategory=%s, tableArea=%s, tableFloor=%s WHERE id=%s'
                      , $table->name, $index, $category, $tableArea, $floor, $table->id);
             @$ret = $this->infoDB->exec($sql);
             if ($ret) {

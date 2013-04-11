@@ -1,4 +1,5 @@
 <?php
+    require 'define.inc';
     define('MENU_DB', '../db/dish.db3');
     
     define('CATEGORIES', "category");
@@ -12,7 +13,7 @@
             if (!$_SESSION['logedin']) {
                 $url="login.php";
                 header("Location: $url");
-            } else if ((time()-$_SESSION['time']) > 1800) {
+            } else if ((time()-$_SESSION['time']) > LOGOUT_TIME) {
                 $_SESSION['logedin'] = false;
                 
                 $url="login.php";
